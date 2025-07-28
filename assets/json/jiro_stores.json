@@ -1,0 +1,98 @@
+[
+{
+  "name": "三田本店",
+  "kana": "みたほんてん",
+  "area": "東京",
+  "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
+  "openDays": [1, 2, 3, 4, 5, 6],
+  "openHours": {
+    "lunch": "08:00〜20:00",
+    "dinner": ""
+  },
+  "holidayNote": "日曜定休・祝日不定休",
+  "address": "〒108-0073 東京都港区三田２丁目１６−４",
+  "lat": 35.648169179987136,
+  "lng": 139.74166475216188,
+  "access": "JR田町駅より徒歩10分、都営三田線・都営浅草線三田駅より徒歩9分",
+  "sns": {
+    "twitter": "",
+    "instagram": "",
+    "official": "https://ameblo.jp/ramen-jiro-mitahonten/"
+  },
+  "menu": "小ラーメン：700円、大ラーメン：800円",
+  "image": "mita.jpg",
+  "hasRenge": false,
+  "seasonings": ["白胡椒"],
+  "boilAdjustable": true,
+  "parkingInfo": "駐輪場なし・駐車場なし",
+  "memo": "",
+  "stamp": false,
+  "visited": false,
+  "customCall": "アブラカラメ"
+}
+,
+{
+  "name": "目黒店",
+  "kana": "めぐろてん",
+  "area": "東京",
+  "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
+  "openDays": [1, 2, 3, 4, 5, 6, 7],
+  "openHours": {
+    "lunch": "11:00〜16:00",
+    "dinner": "18:00〜23:00"
+  },
+  "holidayNote": "定休日無し",
+  "address": "〒153-0063 東京都目黒区目黒３丁目７−２",
+  "lat": 35.63440869736793,
+  "lng": 139.70710982883506,
+  "access": "JR目黒駅より徒歩14分、東急東横線・東京メトロ日比谷線中目黒駅より徒歩9分",
+  "sns": {
+    "twitter": "",
+    "instagram": "",
+    "official": ""
+  },
+  "menu": "小ラーメン：600円、大ラーメン：700円",
+  "image": "meguro.jpg",
+  "hasRenge": false,
+  "seasonings": ["白胡椒", "カエシ", "手指消毒"],
+  "boilAdjustable": true,
+  "parkingInfo": "駐輪場なし・駐車場なし",
+  "memo": "",
+  "stamp": false,
+  "visited": false,
+  "customCall": "アブラカラメ"
+}
+,
+{
+  "name": "仙川店",
+  "kana": "せんがわてん",
+  "area": "東京",
+  "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
+  "openDays": [1, 2, 3, 4, 5, 6],
+  "openHours": {
+    "lunch": "",
+    "dinner": "17:00〜21:00"
+  },
+  "holidayNote": "日曜定休・祝日不定休",
+  "address": "〒182-0002 東京都調布市仙川町１丁目１０−１７",
+  "lat": 35.662002714034855,
+  "lng": 139.583875942328,
+  "access": "京王線仙川駅より徒歩2分",
+  "sns": {
+    "twitter": "https://x.com/senjiro26",
+    "instagram": "",
+    "official": ""
+  },
+  "menu": "小ラーメン：600円、大ラーメン：700円",
+  "image": "meguro.jpg",
+  "hasRenge": false,
+  "seasonings": ["黒胡椒", "お酢", "一味唐辛子", "カレー粉激辛スパイス"],
+  "boilAdjustable": true,
+  "parkingInfo": "駐輪場なし・駐車場なし",
+  "memo": "",
+  "stamp": false,
+  "visited": false,
+  "customCall": "アブラカラメ"
+}
+ 
+]
