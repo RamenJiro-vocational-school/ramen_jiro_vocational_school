@@ -1,0 +1,95 @@
+【Flutter＆Dart開発 ターミナルコマンド一覧（Windows／Mac対応）】
+
+────────────────────────────────────────────
+■ プロジェクトの作成
+────────────────────────────────────────────
+共通：flutter create プロジェクト名
+
+────────────────────────────────────────────
+■ プロジェクトの実行
+────────────────────────────────────────────
+Webで実行：
+  Windows：flutter run -d chrome
+  Mac    ：flutter run -d chrome
+
+Androidエミュレータで実行：
+  共通：flutter run -d emulator-5554（※番号は環境により異なる）
+
+────────────────────────────────────────────
+■ Flutter / Dart のバージョン確認
+────────────────────────────────────────────
+Flutter：flutter --version
+Dart   ：dart --version
+
+────────────────────────────────────────────
+■ デバイス確認
+────────────────────────────────────────────
+flutter devices
+
+────────────────────────────────────────────
+■ ディレクトリ移動
+────────────────────────────────────────────
+Windows：cd C:\Users\ユーザー名\プロジェクトフォルダ
+Mac    ：cd ~/プロジェクトフォルダ
+
+────────────────────────────────────────────
+■ パスの通し方（Flutter/Dart）
+────────────────────────────────────────────
+Windows：
+  PowerShellなどで setx PATH "$env:PATH;C:\flutter\bin"
+
+Mac（zsh）：
+  open -e ~/.zshrc
+  その後ファイルに追記：
+    export PATH="$PATH:/Users/ユーザー名/flutter/bin"
+  保存後：
+    source ~/.zshrc
+
+────────────────────────────────────────────
+■ Android Studio 関連
+────────────────────────────────────────────
+設定ファイルを開く：
+  Windows：notepad %USERPROFILE%\.android\repositories.cfg
+  Mac    ：open -e ~/.android/repositories.cfg
+
+────────────────────────────────────────────
+■ その他
+────────────────────────────────────────────
+アプリ終了（実行中止）：Ctrl + C（共通）
+
+
+────────────────────────────────────────────
+■ Flutter関連
+────────────────────────────────────────────
+flutter doctor          # Flutterの環境チェック
+flutter pub get        # 依存関係を取得
+flutter pub upgrade    # 依存関係をアップグレード
+flutter pub outdated   # 依存のバージョン確認（更新チェック）
+flutter run -d chrome  # Chromeでアプリを実行（Web開発時）
+flutter clean          # ビルドキャッシュ削除（不具合時に有効）
+flutter build web      # Web用にビルド（公開時など）
+
+
+────────────────────────────────────────────
+■ Git / GitHub関連コマンド
+────────────────────────────────────────────
+git init                         # Gitリポジトリを初期化
+git clone <URL>                 # GitHub上のリポジトリをローカルに複製
+git status                      # 現在の変更状態を確認
+git add .                       # すべての変更ファイルをステージング（追加）
+git commit -m "コメント"         # ステージングした変更をコミット（記録）
+
+git branch                      # ブランチ一覧表示
+git checkout -b 新ブランチ名     # 新しいブランチを作成して切り替え
+git checkout main               # ブランチをmainに切り替え
+
+git pull origin main            # リモートのmainブランチから最新の変更を取得
+git push origin main            # ローカルのmainブランチをGitHubに送信
+
+git remote -v                   # リモートURLの確認
+git remote add origin <URL>    # GitHubリポジトリとの接続設定（初回だけ）
+
+
+────────────────────────────────────────────
+
+
