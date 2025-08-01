@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'ラーメン二郎アプリ',
+      title: 'ラーメン二郎データベース',
       theme: ThemeData(
         primarySwatch: Colors.yellow,
         scaffoldBackgroundColor: const Color(0xFFFFFBE6), // 薄黄色の背景にしても◎
