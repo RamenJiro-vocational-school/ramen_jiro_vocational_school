@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
 import '../models/jiro_store.dart';
+import 'store_detail.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -98,33 +99,44 @@ class _HomePageState extends State<HomePage> {
                   final color = getStatusColor(statusInfo["status"]);
                   final hours = statusInfo["hours"];
 
-                  return Container(
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: color,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          store.name,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          ),
-                          textAlign: TextAlign.center,
+                  return GestureDetector(
+                    onTap: () {
+                      // 詳細ページへ遷移
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => StoreDetailPage(store: store),
                         ),
-                        if (hours.isNotEmpty)
+                      );
+                    },
+                    child: Container(
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: color,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
                           Text(
-                            hours,
+                            store.name,
                             style: const TextStyle(
-                              fontSize: 10,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
                               color: Colors.black,
                             ),
+                            textAlign: TextAlign.center,
                           ),
-                      ],
+                          if (hours.isNotEmpty)
+                            Text(
+                              hours,
+                              style: const TextStyle(
+                                fontSize: 10,
+                                color: Colors.black,
+                              ),
+                            ),
+                        ],
+                      ),
                     ),
                   );
                 }).toList(),

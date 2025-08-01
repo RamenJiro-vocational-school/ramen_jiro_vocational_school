@@ -1,15 +1,34 @@
-class JiroStore {
-  final String name;
-  final String area;
-  final String address;
+import 'package:flutter/material.dart';
+import '../models/jiro_store.dart';
 
-  JiroStore({required this.name, required this.area, required this.address});
+class StoreDetailPage extends StatelessWidget {
+  final JiroStore store;
 
-  factory JiroStore.fromJson(Map<String, dynamic> json) {
-    return JiroStore(
-      name: json['name'],
-      area: json['area'],
-      address: json['address'],
+  const StoreDetailPage({super.key, required this.store});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text(store.name)),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              store.name,
+              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 12),
+            Text("エリア: ${store.area}"),
+            const SizedBox(height: 8),
+            Text("住所: ${store.address}"),
+            const SizedBox(height: 8),
+            if (store.businessHours != null)
+              Text("営業時間: ${store.businessHours}"),
+          ],
+        ),
+      ),
     );
   }
 }

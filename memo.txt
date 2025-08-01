@@ -61,7 +61,7 @@ Mac（zsh）：
 ────────────────────────────────────────────
 ■ Flutter関連
 ────────────────────────────────────────────
-flutter doctor          # Flutterの環境チェック
+flutter doctor         # Flutterの環境チェック
 flutter pub get        # 依存関係を取得
 flutter pub upgrade    # 依存関係をアップグレード
 flutter pub outdated   # 依存のバージョン確認（更新チェック）
