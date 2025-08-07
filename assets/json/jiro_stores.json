@@ -120,9 +120,9 @@
   "customCall": "アブラカラメ"
 }
 ,
- {
+{
     "name": "新宿歌舞伎町店",
-    "kana": "",
+    "kana": "しんじゅくかぶきちょうてん",
     "area": "",
     "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
     "openDays": [],
@@ -159,10 +159,11 @@
     "stamp": false,
     "visited": false,
     "customCall": ""
-  },
-  {
+}
+,
+{
     "name": "品川店",
-    "kana": "",
+    "kana": "しながわてん",
     "area": "",
     "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
     "openDays": [],
@@ -199,10 +200,11 @@
     "stamp": false,
     "visited": false,
     "customCall": ""
-  },
-  {
+}
+,
+{
     "name": "新宿小滝橋通り店",
-    "kana": "",
+    "kana": "しんじゅくおたきばしどおりてん",
     "area": "",
     "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
     "openDays": [],
@@ -239,10 +241,11 @@
     "stamp": false,
     "visited": false,
     "customCall": ""
-  },
-  {
+}
+,
+{
     "name": "環七新・新代田店",
-    "kana": "",
+    "kana": "かんななしん・しんだいたてん",
     "area": "",
     "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
     "openDays": [],
@@ -279,10 +282,11 @@
     "stamp": false,
     "visited": false,
     "customCall": ""
-  },
-  {
-    "name": "八王子野猿街道店2",
-    "kana": "",
+}
+,
+{
+    "name": "八王子野猿街道店２",
+    "kana": "はちおうじやえんかいどうてん２",
     "area": "",
     "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
     "openDays": [],
@@ -319,10 +323,11 @@
     "stamp": false,
     "visited": false,
     "customCall": ""
-  },
-  {
+}
+,
+{
     "name": "池袋東口店",
-    "kana": "",
+    "kana": "いけぶくろひがしぐちてん",
     "area": "",
     "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
     "openDays": [],
@@ -359,10 +364,11 @@
     "stamp": false,
     "visited": false,
     "customCall": ""
-  },
-  {
+}
+,
+{
     "name": "亀戸店",
-    "kana": "",
+    "kana": "かめいどてん",
     "area": "",
     "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
     "openDays": [],
@@ -399,10 +405,11 @@
     "stamp": false,
     "visited": false,
     "customCall": ""
-  },
-  {
+}
+,
+{
     "name": "京急川崎店",
-    "kana": "",
+    "kana": "けいきゅうかわさきてん",
     "area": "",
     "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
     "openDays": [],
@@ -439,10 +446,11 @@
     "stamp": false,
     "visited": false,
     "customCall": ""
-  },
-  {
+}
+,
+{
     "name": "府中店",
-    "kana": "",
+    "kana": "ふちゅうてん",
     "area": "",
     "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
     "openDays": [],
@@ -479,10 +487,11 @@
     "stamp": false,
     "visited": false,
     "customCall": ""
-  },
-  {
+}
+,
+{
     "name": "松戸駅前店Ⅲ",
-    "kana": "",
+    "kana": "まつどえきまえてんⅢ",
     "area": "",
     "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
     "openDays": [],
@@ -519,10 +528,11 @@
     "stamp": false,
     "visited": false,
     "customCall": ""
-  },
-  {
+}
+,
+{
   "name": "めじろ台店",
-  "kana": "",
+  "kana": "めじろだいてん",
   "area": "",
   "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
   "openDays": [],
@@ -551,10 +561,11 @@
   "stamp": false,
   "visited": false,
   "customCall": ""
-},
+}
+,
 {
   "name": "荻窪店",
-  "kana": "",
+  "kana": "おぎくぼてん",
   "area": "",
   "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
   "openDays": [],
@@ -583,10 +594,11 @@
   "stamp": false,
   "visited": false,
   "customCall": ""
-},
+}
+,
 {
   "name": "上野毛店",
-  "kana": "",
+  "kana": "かみのげてん",
   "area": "",
   "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
   "openDays": [],
@@ -615,10 +627,11 @@
   "stamp": false,
   "visited": false,
   "customCall": ""
-},
+}
+,
 {
   "name": "京成大久保店",
-  "kana": "",
+  "kana": "けいせいおおくぼてん",
   "area": "",
   "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
   "openDays": [],
@@ -647,10 +660,11 @@
   "stamp": false,
   "visited": false,
   "customCall": ""
-},
+}
+,
 {
   "name": "環七一之江店",
-  "kana": "",
+  "kana": "かんなないちのえてん",
   "area": "",
   "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
   "openDays": [],
@@ -679,10 +693,11 @@
   "stamp": false,
   "visited": false,
   "customCall": ""
-},
+}
+,
 {
   "name": "相模大野店",
-  "kana": "",
+  "kana": "さがみおおのてん",
   "area": "",
   "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
   "openDays": [],
@@ -711,10 +726,11 @@
   "stamp": false,
   "visited": false,
   "customCall": ""
-},
+}
+,
 {
   "name": "横浜関内店",
-  "kana": "",
+  "kana": "よこはまかんないてん",
   "area": "",
   "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
   "openDays": [],
@@ -743,10 +759,11 @@
   "stamp": false,
   "visited": false,
   "customCall": ""
-},
+}
+,
 {
   "name": "神田神保町店",
-  "kana": "",
+  "kana": "かんだじんぼうちょうてん",
   "area": "",
   "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
   "openDays": [],
@@ -775,10 +792,11 @@
   "stamp": false,
   "visited": false,
   "customCall": ""
-},
+}
+,
 {
   "name": "小岩店",
-  "kana": "",
+  "kana": "こいわてん",
   "area": "",
   "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
   "openDays": [],
@@ -807,10 +825,11 @@
   "stamp": false,
   "visited": false,
   "customCall": ""
-},
+}
+,
 {
   "name": "ひばりヶ丘駅前店",
-  "kana": "",
+  "kana": "ひばりがおかえきまえてん",
   "area": "",
   "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
   "openDays": [],
@@ -839,10 +858,11 @@
   "stamp": false,
   "visited": false,
   "customCall": ""
-},
+}
+,
 {
   "name": "栃木街道店",
-  "kana": "",
+  "kana": "とちぎかいどうてん",
   "area": "",
   "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
   "openDays": [],
@@ -871,10 +891,11 @@
   "stamp": false,
   "visited": false,
   "customCall": ""
-},
+}
+,
 {
   "name": "立川店",
-  "kana": "",
+  "kana": "たちかわてん",
   "area": "",
   "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
   "openDays": [],
@@ -903,10 +924,11 @@
   "stamp": false,
   "visited": false,
   "customCall": ""
-},
+}
+,
 {
   "name": "千住大橋駅前店",
-  "kana": "",
+  "kana": "せんじゅおおはしえきまえてん",
   "area": "",
   "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
   "openDays": [],
@@ -935,10 +957,11 @@
   "stamp": false,
   "visited": false,
   "customCall": ""
-},
+}
+,
 {
   "name": "柏店",
-  "kana": "",
+  "kana": "かしわてん",
   "area": "",
   "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
   "openDays": [],
@@ -967,10 +990,11 @@
   "stamp": false,
   "visited": false,
   "customCall": ""
-},
+}
+,
 {
   "name": "湘南藤沢店",
-  "kana": "",
+  "kana": "しょうなんふじさわてん",
   "area": "",
   "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
   "openDays": [],
@@ -999,10 +1023,11 @@
   "stamp": false,
   "visited": false,
   "customCall": ""
-},
+}
+,
 {
   "name": "西台駅前店",
-  "kana": "",
+  "kana": "にしだいえきまえてん",
   "area": "",
   "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
   "openDays": [],
@@ -1031,10 +1056,11 @@
   "stamp": false,
   "visited": false,
   "customCall": ""
-},
+}
+,
 {
   "name": "中山駅前店",
-  "kana": "",
+  "kana": "なかやまえきまえてん",
   "area": "",
   "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
   "openDays": [],
@@ -1063,10 +1089,11 @@
   "stamp": false,
   "visited": false,
   "customCall": ""
-},
+}
+,
 {
   "name": "仙台店",
-  "kana": "",
+  "kana": "せんだいてん",
   "area": "",
   "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
   "openDays": [],
@@ -1095,10 +1122,11 @@
   "stamp": false,
   "visited": false,
   "customCall": ""
-},
+}
+,
 {
   "name": "札幌店",
-  "kana": "",
+  "kana": "さっぽろてん",
   "area": "",
   "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
   "openDays": [],
@@ -1127,10 +1155,11 @@
   "stamp": false,
   "visited": false,
   "customCall": ""
-},
+}
+,
 {
   "name": "会津若松駅前店",
-  "kana": "",
+  "kana": "あいづわかまつえきまえてん",
   "area": "",
   "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
   "openDays": [],
@@ -1159,10 +1188,11 @@
   "stamp": false,
   "visited": false,
   "customCall": ""
-},
+}
+,
 {
   "name": "新潟店",
-  "kana": "",
+  "kana": "にいがたてん",
   "area": "",
   "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
   "openDays": [],
@@ -1191,10 +1221,11 @@
   "stamp": false,
   "visited": false,
   "customCall": ""
-},
+}
+,
 {
   "name": "川越店",
-  "kana": "",
+  "kana": "かわごえてん",
   "area": "",
   "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
   "openDays": [],
@@ -1223,10 +1254,11 @@
   "stamp": false,
   "visited": false,
   "customCall": ""
-},
+}
+,
 {
   "name": "京都店",
-  "kana": "",
+  "kana": "きょうとてん",
   "area": "",
   "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
   "openDays": [],
@@ -1255,10 +1287,11 @@
   "stamp": false,
   "visited": false,
   "customCall": ""
-},
+}
+,
 {
   "name": "越谷店",
-  "kana": "",
+  "kana": "こしがやてん",
   "area": "",
   "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
   "openDays": [],
@@ -1287,10 +1320,11 @@
   "stamp": false,
   "visited": false,
   "customCall": ""
-},
+}
+,
 {
   "name": "前橋千代田町店",
-  "kana": "",
+  "kana": "まえばしちよだまちてん",
   "area": "",
   "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
   "openDays": [],
@@ -1319,10 +1353,11 @@
   "stamp": false,
   "visited": false,
   "customCall": ""
-},
+}
+,
 {
   "name": "千葉店",
-  "kana": "",
+  "kana": "ちばてん",
   "area": "",
   "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
   "openDays": [],
@@ -1351,10 +1386,11 @@
   "stamp": false,
   "visited": false,
   "customCall": ""
-},
+}
+,
 {
   "name": "大宮公園駅前店",
-  "kana": "",
+  "kana": "おおみやこうえんえきまえてん",
   "area": "",
   "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
   "openDays": [],
@@ -1383,10 +1419,11 @@
   "stamp": false,
   "visited": false,
   "customCall": ""
-},
+}
+,
 {
   "name": "ひたちなか店",
-  "kana": "",
+  "kana": "ひたちなかてん",
   "area": "",
   "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
   "openDays": [],
@@ -1415,10 +1452,11 @@
   "stamp": false,
   "visited": false,
   "customCall": ""
-},
+}
+,
 {
   "name": "一橋学園店",
-  "kana": "",
+  "kana": "ひとつばしがくえんてん",
   "area": "",
   "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
   "openDays": [],
@@ -1447,10 +1485,11 @@
   "stamp": false,
   "visited": false,
   "customCall": ""
-},
+}
+,
 {
   "name": "生田駅前店",
-  "kana": "",
+  "kana": "いくたえきまえてん",
   "area": "",
   "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
   "openDays": [],
@@ -1479,10 +1518,11 @@
   "stamp": false,
   "visited": false,
   "customCall": ""
-},
+}
+,
 {
   "name": "朝倉街道駅前店",
-  "kana": "",
+  "kana": "あさくらがいどうえきまえてん",
   "area": "",
   "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
   "openDays": [],
