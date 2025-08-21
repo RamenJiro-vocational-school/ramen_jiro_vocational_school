@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
 import '../models/jiro_store.dart';
 import 'store_detail.dart';
+import 'store_list.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -81,7 +82,21 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFFFF8D9),
-      appBar: AppBar(title: const Text('ラーメン二郎データベース')),
+      appBar: AppBar(
+        title: const Text('ラーメン二郎データベース'),
+        actions: [
+          IconButton(
+            tooltip: '店舗一覧（エリア別）',
+            icon: const Icon(Icons.list_alt),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const StoreListPage()),
+              );
+            },
+          ),
+        ],
+      ),
       body: FutureBuilder<List<JiroStore>>(
         future: allStoresFuture,
         builder: (context, snapshot) {
