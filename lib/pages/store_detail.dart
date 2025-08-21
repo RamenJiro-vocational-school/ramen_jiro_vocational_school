@@ -72,7 +72,7 @@ class StoreDetailPage extends StatelessWidget {
     }
     if (store.boilAdjustable != null) {
       chips.add(
-        Chip(label: Text('麺かため可: ${store.boilAdjustable! ? '可' : '不可'}')),
+        Chip(label: Text('麺湯で加減調整: ${store.boilAdjustable! ? '可' : '不可'}')),
       );
     }
     if ((store.seasonings ?? []).isNotEmpty) {
@@ -213,7 +213,7 @@ class StoreDetailPage extends StatelessWidget {
 
             // 営業時間
             const Text(
-              '営業時間（曜日別）',
+              '営業時間',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
