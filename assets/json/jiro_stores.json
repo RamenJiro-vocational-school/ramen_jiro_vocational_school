@@ -2,7 +2,7 @@
 {
   "name": "三田本店",
   "kana": "みたほんてん",
-  "area": "東京",
+  "area": "東京都",
   "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
   "openDays": [1, 2, 3, 4, 5, 6],
   "business_hours": {
@@ -17,7 +17,7 @@
     "lunch": "08:00-20:00",
     "dinner": ""
   },
-  "holidayNote": "日曜・祝日定休",
+  "holidayNote": "日曜,・祝日定休",
   "address": "〒108-0073 東京都港区三田２丁目１６−４",
   "lat": 35.648169179987136,
   "lng": 139.74166475216188,
@@ -42,7 +42,7 @@
 {
   "name": "目黒店",
   "kana": "めぐろてん",
-  "area": "東京",
+  "area": "東京都",
   "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
   "openDays": [1, 2, 3, 4, 5, 6, 7],
     "business_hours": {
@@ -83,7 +83,7 @@
 {
   "name": "仙川店",
   "kana": "せんがわてん",
-  "area": "東京",
+  "area": "東京都",
   "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
   "openDays": [1, 2, 3, 4, 5, 6],
   "business_hours": {
@@ -123,7 +123,7 @@
 {
     "name": "新宿歌舞伎町店",
     "kana": "しんじゅくかぶきちょうてん",
-    "area": "東京",
+    "area": "東京都",
     "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
     "openDays": [1, 2, 4, 5, 6, 7],
     "business_hours": {
@@ -163,7 +163,7 @@
 {
     "name": "品川店",
     "kana": "しながわてん",
-    "area": "東京",
+    "area": "東京都",
     "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
     "openDays": [1, 2, 3, 4, 5, 6],
     "business_hours": {
@@ -203,7 +203,7 @@
 {
     "name": "新宿小滝橋通り店",
     "kana": "しんじゅくおたきばしどおりてん",
-    "area": "東京",
+    "area": "東京都",
     "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
     "openDays": [1, 2, 3, 4, 5, 6, 7],
     "business_hours": {
@@ -244,7 +244,7 @@
 {
     "name": "環七新・新代田店",
     "kana": "かんななしん・しんだいたてん",
-    "area": "東京",
+    "area": "東京都",
     "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
     "openDays": [1, 2, 3, 4, 5, 6, 7],
     "business_hours": {
@@ -285,7 +285,7 @@
 {
     "name": "八王子野猿街道店２",
     "kana": "はちおうじやえんかいどうてん２",
-    "area": "東京",
+    "area": "東京都",
     "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
     "openDays": [2, 3, 4, 5, 6, 7],
     "business_hours": {
@@ -325,7 +325,7 @@
 {
     "name": "池袋東口店",
     "kana": "いけぶくろひがしぐちてん",
-    "area": "東京",
+    "area": "東京都",
     "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
     "openDays": [3, 4, 5, 6, 7],
     "business_hours": {
@@ -364,7 +364,7 @@
 {
     "name": "亀戸店",
     "kana": "かめいどてん",
-    "area": "東京",
+    "area": "東京都",
     "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
     "openDays": [1, 2, 3, 4, 5, 6, 7],
     "business_hours": {
@@ -405,7 +405,7 @@
 {
     "name": "京急川崎店",
     "kana": "けいきゅうかわさきてん",
-    "area": "神奈川",
+    "area": "神奈川県",
     "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
     "openDays": [1, 2, 3, 4, 5, 6],
     "business_hours": {
@@ -445,7 +445,7 @@
 {
     "name": "府中店",
     "kana": "ふちゅうてん",
-    "area": "東京",
+    "area": "東京都",
     "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
     "openDays": [1, 2, 3, 4, 5],
     "business_hours": {
@@ -484,7 +484,7 @@
 {
     "name": "松戸駅前店Ⅲ",
     "kana": "まつどえきまえてんⅢ",
-    "area": "千葉",
+    "area": "千葉県",
     "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
     "openDays": [1, 2, 3, 4, 5, 6],
     "business_hours": {
@@ -524,7 +524,7 @@
 {
   "name": "めじろ台店",
   "kana": "めじろだいてん",
-  "area": "東京",
+  "area": "東京都",
   "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
   "openDays": [1, 2, 3, 5, 6, 7],
   "business_hours": {
@@ -564,7 +564,7 @@
 {
   "name": "荻窪店",
   "kana": "おぎくぼてん",
-  "area": "東京",
+  "area": "東京都",
   "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
   "openDays": [1, 2, 3, 4, 5, 6],
   "business_hours": {
@@ -604,7 +604,7 @@
 {
   "name": "上野毛店",
   "kana": "かみのげてん",
-  "area": "東京",
+  "area": "東京都",
   "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
   "openDays": [1, 2, 3, 4, 5, 6],
   "business_hours": {
@@ -644,7 +644,7 @@
 {
   "name": "京成大久保店",
   "kana": "けいせいおおくぼてん",
-  "area": "千葉",
+  "area": "千葉県",
   "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
   "openDays": [1, 2, 3, 4, 5, 6],
   "business_hours": {
@@ -684,7 +684,7 @@
 {
   "name": "環七一之江店",
   "kana": "かんなないちのえてん",
-  "area": "東京",
+  "area": "東京都",
   "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
   "openDays": [1, 2, 4, 5, 6 ,7],
   "business_hours": {
@@ -724,7 +724,7 @@
 {
   "name": "相模大野店",
   "kana": "さがみおおのてん",
-  "area": "神奈川",
+  "area": "神奈川県",
   "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
   "openDays": [2, 3, 4, 5, 6, 7],
   "business_hours": {
@@ -764,7 +764,7 @@
 {
   "name": "横浜関内店",
   "kana": "よこはまかんないてん",
-  "area": "神奈川",
+  "area": "神奈川県",
   "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
   "openDays": [1, 2, 4, 5, 6 ,7],
   "business_hours": {
@@ -804,7 +804,7 @@
 {
   "name": "神田神保町店",
   "kana": "かんだじんぼうちょうてん",
-  "area": "東京",
+  "area": "東京都",
   "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
   "openDays": [1, 2, 3, 4, 5, 6],
   "business_hours": {
@@ -844,7 +844,7 @@
 {
   "name": "小岩店",
   "kana": "こいわてん",
-  "area": "東京",
+  "area": "東京都",
   "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
   "openDays": [2, 3, 4, 5, 6],
   "business_hours": {
@@ -883,7 +883,7 @@
 {
   "name": "ひばりヶ丘駅前店",
   "kana": "ひばりがおかえきまえてん",
-  "area": "東京",
+  "area": "東京都",
   "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
   "openDays": [1, 2, 3, 4, 5, 6],
   "business_hours": {
@@ -923,7 +923,7 @@
 {
   "name": "栃木街道店",
   "kana": "とちぎかいどうてん",
-  "area": "栃木",
+  "area": "栃木県",
   "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
   "openDays": [1, 2, 3, 4, 5, 6],
   "business_hours": {
@@ -963,7 +963,7 @@
 {
   "name": "立川店",
   "kana": "たちかわてん",
-  "area": "東京",
+  "area": "東京都",
   "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
   "openDays": [1, 3, 4, 5, 6, 7],
   "business_hours": {
@@ -1003,7 +1003,7 @@
 {
   "name": "千住大橋駅前店",
   "kana": "せんじゅおおはしえきまえてん",
-  "area": "東京",
+  "area": "東京都",
   "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
   "openDays": [1, 2, 3, 5, 6],
   "business_hours": {
@@ -1042,7 +1042,7 @@
 {
   "name": "柏店",
   "kana": "かしわてん",
-  "area": "千葉",
+  "area": "千葉県",
   "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
   "openDays": [1, 2, 3, 4, 5, 6],
   "business_hours": {
@@ -1082,7 +1082,7 @@
 {
   "name": "湘南藤沢店",
   "kana": "しょうなんふじさわてん",
-  "area": "神奈川",
+  "area": "神奈川県",
   "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
   "openDays": [1, 3, 4, 5, 6, 7],
   "business_hours": {
@@ -1122,30 +1122,37 @@
 {
   "name": "西台駅前店",
   "kana": "にしだいえきまえてん",
-  "area": "",
+  "area": "東京都",
   "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
-  "openDays": [],
-  "business_hours": {},
+  "openDays": [1, 2, 3, 4, 5, 6],
+  "business_hours": {
+      "1": "11:00-13:30, 17:30-20:30",
+      "2": "11:00-13:30, 17:30-20:30",
+      "3": "11:00-13:30",
+      "4": "11:00-13:30, 17:30-20:30",
+      "5": "11:00-13:30, 17:30-20:30",
+      "6": "09:30-12:30"
+    },
   "openHours": {
-    "lunch": "",
-    "dinner": ""
+    "lunch": "11:00-13:30",
+    "dinner": "17:30-20:30"
   },
-  "holidayNote": "",
-  "address": "",
-  "lat": 0.0,
-  "lng": 0.0,
-  "access": "",
+  "holidayNote": "日曜・祝日定休",
+  "address": "〒174-0046 東京都板橋区蓮根３丁目９−７",
+  "lat": 35.787002170500315,
+  "lng": 139.6748838,
+  "access": "都営三田線西代駅より徒歩1分",
   "sns": {
-    "twitter": "",
-    "instagram": "",
-    "official": ""
+    "twitter": "https://x.com/jiro_nishidai",
+    "facebook": "https://ja-jp.facebook.com/jironishidai/",
+    "official": "https://x.com/hiroshinishidai"
   },
-  "menu": "",
+  "menu": "ラーメン小：990円, ラーメン大：1100円, ラーメン少なめ：990円, ラーメン半分：960円, ラーメンミニ：850円",
   "image": "",
   "hasRenge": false,
-  "seasonings": [],
+  "seasonings": ["白胡椒", "醤油", "お酢", "花椒", "一味唐辛子"],
   "boilAdjustable": false,
-  "parkingInfo": "",
+  "parkingInfo": "駐輪場なし・駐車場なし",
   "memo": "",
   "stamp": false,
   "visited": false,
@@ -1155,30 +1162,37 @@
 {
   "name": "中山駅前店",
   "kana": "なかやまえきまえてん",
-  "area": "",
+  "area": "神奈川県",
   "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
-  "openDays": [],
-  "business_hours": {},
+  "openDays": [1, 2, 3 ,5, 6, 7],
+  "business_hours": {
+      "1": "11:00-14:00, 18:00-21:30",
+      "2": "11:00-14:00, 18:00-21:30",
+      "3": "11:00-14:00, 18:00-21:30",
+      "5": "11:00-14:00, 18:00-21:30",
+      "6": "11:00-14:00, 18:00-21:30",
+      "7": "11:00-14:00, 18:00-21:30"
+    },
   "openHours": {
-    "lunch": "",
-    "dinner": ""
+    "lunch": "11:00-14:00",
+    "dinner": "18:00-21:30"
   },
-  "holidayNote": "",
-  "address": "",
-  "lat": 0.0,
-  "lng": 0.0,
-  "access": "",
+  "holidayNote": "木曜定休",
+  "address": "〒226-0014 神奈川県横浜市緑区台村町３０９番地１ 土井ビル",
+  "lat": 35.51328702696464,
+  "lng": 139.5387242018495,
+  "access": "JR中山駅より徒歩3分",
   "sns": {
-    "twitter": "",
+    "twitter": "https://x.com/NKYMJIRO",
     "instagram": "",
     "official": ""
   },
-  "menu": "",
+  "menu": "小ラーメン：940円, 大ラーメン：1040円, 甘～い脂：70円, 味付うずら：120円",
   "image": "",
-  "hasRenge": false,
-  "seasonings": [],
-  "boilAdjustable": false,
-  "parkingInfo": "",
+  "hasRenge": true,
+  "seasonings": ["白胡椒", "黒胡椒", "一味唐辛子", "カラメ", "お酢"],
+  "boilAdjustable": true,
+  "parkingInfo": "駐輪場なし・駐車場なし",
   "memo": "",
   "stamp": false,
   "visited": false,
@@ -1186,32 +1200,40 @@
 }
 ,
 {
-  "name": "仙台店",
+  "name": "仙台店2",
   "kana": "せんだいてん",
-  "area": "",
+  "area": "宮城県",
   "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
-  "openDays": [],
-  "business_hours": {},
+  "openDays": [1, 2, 3, 4, 5, 6, 7],
+  "business_hours": {
+      "1": "11:00-14:30, 17:00-21:00",
+      "2": "11:00-14:30, 17:00-21:00",
+      "3": "11:00-14:30, 17:00-21:00",
+      "4": "11:00-14:30, 17:00-21:00",
+      "5": "11:00-14:30, 17:00-21:00",
+      "6": "11:00-21:00",
+      "7": "11:00-21:00"
+    },
   "openHours": {
-    "lunch": "",
-    "dinner": ""
+    "lunch": "11:00-14:30",
+    "dinner": "17:00-21:00"
   },
-  "holidayNote": "",
-  "address": "",
-  "lat": 0.0,
-  "lng": 0.0,
-  "access": "",
+  "holidayNote": "祝日11:00-21:00の通し営業",
+  "address": "〒980-0811 宮城県仙台市青葉区一番町２丁目５−３２ 第一観光ビル 1階",
+  "lat": 38.25954766433661,
+  "lng": 140.87207777116436,
+  "access": "仙台市地下鉄東西線青葉通一番町駅より徒歩1分, JR仙台駅より徒歩14分",
   "sns": {
-    "twitter": "",
+    "twitter": "https://x.com/jiro_sendai1023",
     "instagram": "",
     "official": ""
   },
-  "menu": "",
+  "menu": "小ラーメン：920円, 大ラーメン：1020円, 汁なし変更：+100円",
   "image": "",
-  "hasRenge": false,
-  "seasonings": [],
-  "boilAdjustable": false,
-  "parkingInfo": "",
+  "hasRenge": true,
+  "seasonings": ["一味唐辛子", "カエシ", "白胡椒", "お酢"],
+  "boilAdjustable": true,
+  "parkingInfo": "駐輪場なし・駐車場なし",
   "memo": "",
   "stamp": false,
   "visited": false,
@@ -1221,30 +1243,37 @@
 {
   "name": "札幌店",
   "kana": "さっぽろてん",
-  "area": "",
+  "area": "北海道",
   "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
-  "openDays": [],
-  "business_hours": {},
+  "openDays": [1, 2, 3, 4, 5, 6],
+  "business_hours": {
+      "1": "11:00-14:00, 17:00-21:00",
+      "2": "11:00-14:00, 17:00-21:00",
+      "3": "11:00-14:00, 17:00-21:00",
+      "4": "11:00-14:00, 17:00-21:00",
+      "5": "11:00-14:00, 17:00-21:00",
+      "6": "11:00-15:00"
+    },
   "openHours": {
-    "lunch": "",
-    "dinner": ""
+    "lunch": "11:00-14:00",
+    "dinner": "17:00-21:00"
   },
-  "holidayNote": "",
-  "address": "",
-  "lat": 0.0,
-  "lng": 0.0,
-  "access": "",
+  "holidayNote": "日曜定休, 祝日不定休",
+  "address": "〒060-0806 北海道札幌市北区北６条西８丁目８−１１",
+  "lat": 43.067589686693154,
+  "lng": 141.34393721534258,
+  "access": "JR札幌駅より徒歩10分",
   "sns": {
-    "twitter": "",
+    "twitter": "https://x.com/jiro_sapporo_",
     "instagram": "",
     "official": ""
   },
-  "menu": "",
+  "menu": "ミニラーメン：900円, 小ラーメン：1000円",
   "image": "",
   "hasRenge": false,
-  "seasonings": [],
-  "boilAdjustable": false,
-  "parkingInfo": "",
+  "seasonings": ["カエシ", "一味唐辛子"],
+  "boilAdjustable": true,
+  "parkingInfo": "駐輪場なし・駐車場なし",
   "memo": "",
   "stamp": false,
   "visited": false,
@@ -1254,30 +1283,37 @@
 {
   "name": "会津若松駅前店",
   "kana": "あいづわかまつえきまえてん",
-  "area": "",
+  "area": "福島県",
   "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
-  "openDays": [],
-  "business_hours": {},
+  "openDays": [2, 3, 4, 5, 6, 7],
+  "business_hours": {
+      "2": "11:00-14:00, 17:00-21:00",
+      "3": "11:00-14:00, 17:00-21:00",
+      "4": "11:00-14:00, 17:00-21:00",
+      "5": "11:00-14:00, 17:00-21:00",
+      "6": "11:00-15:00",
+      "7": "11:00-15:00"
+    },
   "openHours": {
-    "lunch": "",
-    "dinner": ""
+    "lunch": "11:00-14:00",
+    "dinner": "17:00-21:00"
   },
-  "holidayNote": "",
-  "address": "",
-  "lat": 0.0,
-  "lng": 0.0,
-  "access": "",
+  "holidayNote": "月曜・第1,3,5日曜定休, 祝日不定休, 第2,4日曜は営業",
+  "address": "〒965-0041 福島県会津若松市駅前町６−３１",
+  "lat": 37.50688041863607,
+  "lng": 139.93142902883565,
+  "access": "JR会津若松駅より徒歩3分",
   "sns": {
-    "twitter": "",
+    "twitter": "https://x.com/aizu_jiro",
     "instagram": "",
     "official": ""
   },
-  "menu": "",
+  "menu": "小ラーメン：850円, 大ラーメン：950円, プチラーメン：800円, ミニラーメン：850円, 小つけ麺エビ味：1000円, 大つけ麺エビ味：1100円",
   "image": "",
-  "hasRenge": false,
-  "seasonings": [],
-  "boilAdjustable": false,
-  "parkingInfo": "",
+  "hasRenge": true,
+  "seasonings": ["白胡椒", "黒胡椒", "一味唐辛子", "カエシ"],
+  "boilAdjustable": true,
+  "parkingInfo": "駐輪場なし・駐車場なし",
   "memo": "",
   "stamp": false,
   "visited": false,
@@ -1287,30 +1323,36 @@
 {
   "name": "新潟店",
   "kana": "にいがたてん",
-  "area": "",
+  "area": "新潟県",
   "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
-  "openDays": [],
-  "business_hours": {},
+  "openDays": [2, 3, 5, 6, 7],
+  "business_hours": {
+      "2": "10:45-13:45, 16:30-21:00",
+      "3": "10:45-13:45, 16:30-21:00",
+      "5": "10:45-13:45, 16:30-21:00",
+      "6": "09:30-15:00",
+      "7": "09:30-15:00"
+    },
   "openHours": {
-    "lunch": "",
-    "dinner": ""
+    "lunch": "10:45-13:45",
+    "dinner": "16:30-21:00"
   },
-  "holidayNote": "",
-  "address": "",
-  "lat": 0.0,
-  "lng": 0.0,
-  "access": "",
+  "holidayNote": "月曜・木曜定休日",
+  "address": "〒950-0088 新潟県新潟市中央区万代５丁目２−８",
+  "lat": 37.91741224317209,
+  "lng": 139.0601610018495,
+  "access": "JR新潟駅より徒歩9分",
   "sns": {
     "twitter": "",
-    "instagram": "",
+    "instagram": "https://www.instagram.com/jiro.niigata/",
     "official": ""
   },
-  "menu": "",
+  "menu": "ラーメン小：900円, ラーメン大：1000円, ラーメン小ぶた入り：1250円, ラーメン大ぶた入り：1350円",
   "image": "",
-  "hasRenge": false,
-  "seasonings": [],
-  "boilAdjustable": false,
-  "parkingInfo": "",
+  "hasRenge": true,
+  "seasonings": ["白胡椒", "一味唐辛子", "カラメ"],
+  "boilAdjustable": true,
+  "parkingInfo": "駐輪場なし・駐車場なし",
   "memo": "",
   "stamp": false,
   "visited": false,
@@ -1320,30 +1362,37 @@
 {
   "name": "川越店",
   "kana": "かわごえてん",
-  "area": "",
+  "area": "埼玉県",
   "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
-  "openDays": [],
-  "business_hours": {},
+  "openDays": [2, 3, 4, 5, 6, 7],
+  "business_hours": {
+      "2": "11:00-14:00, 18:00-21:00",
+      "3": "11:00-14:00, 18:00-21:00",
+      "4": "11:00-14:00, 18:00-21:00",
+      "5": "11:00-14:00, 18:00-21:00",
+      "6": "11:00-14:00, 18:00-21:00",
+      "7": "11:00-14:00"
+    },
   "openHours": {
-    "lunch": "",
-    "dinner": ""
+    "lunch": "11:00-14:00",
+    "dinner": "18:00-21:00"
   },
-  "holidayNote": "",
-  "address": "",
-  "lat": 0.0,
-  "lng": 0.0,
-  "access": "",
+  "holidayNote": "月曜定休",
+  "address": "〒350-1126 埼玉県川越市旭町１丁目４−１５",
+  "lat": 35.90285653847015,
+  "lng": 139.47664108650693,
+  "access": "JR川越駅より徒歩12分",
   "sns": {
-    "twitter": "",
+    "twitter": "https://x.com/kwge26",
     "instagram": "",
-    "official": ""
+    "official": "https://kwge26.tumblr.com/"
   },
-  "menu": "",
+  "menu": "ラーメン：950円, 麺増し：50円, 豚増し：200円, お持ち帰り：1000円",
   "image": "",
-  "hasRenge": false,
-  "seasonings": [],
-  "boilAdjustable": false,
-  "parkingInfo": "",
+  "hasRenge": true,
+  "seasonings": ["白胡椒", "カラメ"],
+  "boilAdjustable": true,
+  "parkingInfo": "駐輪場あり・駐車場なし",
   "memo": "",
   "stamp": false,
   "visited": false,
@@ -1353,30 +1402,37 @@
 {
   "name": "京都店",
   "kana": "きょうとてん",
-  "area": "",
+  "area": "京都府",
   "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
-  "openDays": [],
-  "business_hours": {},
+  "openDays": [1, 2, 4, 5, 6, 7],
+  "business_hours": {
+      "1": "11:00-14:00, 18:00-21:30",
+      "2": "11:00-14:00, 18:00-21:30",
+      "4": "11:00-14:00, 18:00-21:30",
+      "5": "11:00-14:00, 18:00-21:30",
+      "6": "11:00-14:30, 17:30-21:30",
+      "7": "11:00-14:30, 17:30-20:30"
+    },
   "openHours": {
-    "lunch": "",
-    "dinner": ""
+    "lunch": "11:00-14:00",
+    "dinner": "18:00-21:30"
   },
-  "holidayNote": "",
-  "address": "",
-  "lat": 0.0,
-  "lng": 0.0,
-  "access": "",
+  "holidayNote": "水曜定休, 不定休（Twitter要確認）",
+  "address": "〒606-8117 京都府京都市左京区一乗寺里ノ前町４",
+  "lat": 35.044104746999324,
+  "lng": 135.78756694417825,
+  "access": "叡山電鉄叡山本線一乗寺駅より徒歩30秒, 地下鉄烏丸線松ヶ崎駅より徒歩22分",
   "sns": {
-    "twitter": "",
+    "twitter": "https://x.com/jiro_kyoto",
     "instagram": "",
     "official": ""
   },
-  "menu": "",
+  "menu": "ラーメン並：1100円, ラーメン半分：1000円, ラーメン中盛り：1100円, ラーメン大盛り：1200円, 脂飯：200円, 九条ねぎ：100円",
   "image": "",
-  "hasRenge": false,
-  "seasonings": [],
+  "hasRenge": true,
+  "seasonings": ["一味唐辛子", "黒胡椒", "白胡椒", "カラメ", "ラー油"],
   "boilAdjustable": false,
-  "parkingInfo": "",
+  "parkingInfo": "駐輪場なし・駐車場なし",
   "memo": "",
   "stamp": false,
   "visited": false,
@@ -1386,30 +1442,36 @@
 {
   "name": "越谷店",
   "kana": "こしがやてん",
-  "area": "",
+  "area": "埼玉県",
   "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
-  "openDays": [],
-  "business_hours": {},
+  "openDays": [1, 2, 3, 4, 5],
+  "business_hours": {
+      "1": "11:00-14:30, 17:00-20:30",
+      "2": "11:00-14:30, 17:00-20:30",
+      "3": "11:00-14:30, 17:00-20:30",
+      "4": "11:00-14:30, 17:00-20:30",
+      "5": "11:00-14:30, 17:00-20:30"
+    },
   "openHours": {
-    "lunch": "",
-    "dinner": ""
+    "lunch": "11:00-14:30",
+    "dinner": "17:00-20:30"
   },
-  "holidayNote": "",
-  "address": "",
-  "lat": 0.0,
-  "lng": 0.0,
-  "access": "",
+  "holidayNote": "土曜・日曜臨時営業あり（Twitter要確認）",
+  "address": "〒343-0024 埼玉県越谷市越ヶ谷２丁目３−７",
+  "lat": 35.89034739688638,
+  "lng": 139.78764157116433,
+  "access": "東武伊勢崎線越谷駅より徒歩4分",
   "sns": {
-    "twitter": "",
+    "twitter": "https://x.com/ksgy26",
     "instagram": "",
-    "official": ""
+    "official": "https://ksgy26.tumblr.com/"
   },
-  "menu": "",
+  "menu": "小ラーメン：950円, 麺半分豚1枚：850円, 汁なし変更：100円, ぶた増し：300円",
   "image": "",
-  "hasRenge": false,
-  "seasonings": [],
+  "hasRenge": true,
+  "seasonings": ["白胡椒"],
   "boilAdjustable": false,
-  "parkingInfo": "",
+  "parkingInfo": "駐輪場なし・駐車場なし",
   "memo": "",
   "stamp": false,
   "visited": false,
@@ -1419,21 +1481,28 @@
 {
   "name": "前橋千代田町店",
   "kana": "まえばしちよだまちてん",
-  "area": "",
+  "area": "群馬県",
   "_note": " 月1,火2,水3,木4,金5,土6,日7 ",
-  "openDays": [],
-  "business_hours": {},
+  "openDays": [2, 3, 4, 5, 6, 7],
+  "business_hours": {
+      "2": "10:30-14:30, 17:00-20:00",
+      "3": "10:30-14:30, 17:00-20:00",
+      "4": "10:30-14:30, 17:00-20:00",
+      "5": "10:30-14:30, 17:00-20:00",
+      "6": "10:30-14:30, 17:00-20:00",
+      "7": "10:30-14:30, 17:00-20:00"
+    },
   "openHours": {
-    "lunch": "",
-    "dinner": ""
+    "lunch": "10:30-14:30",
+    "dinner": "17:00-20:00"
   },
-  "holidayNote": "",
-  "address": "",
-  "lat": 0.0,
-  "lng": 0.0,
-  "access": "",
+  "holidayNote": "月曜定休",
+  "address": "〒371-0022 群馬県前橋市千代田町４丁目１２−３",
+  "lat": 36.392562864606724,
+  "lng": 139.07094887116435,
+  "access": "上毛電鉄中央前橋駅より徒歩7分, JR前橋駅より徒歩17分",
   "sns": {
-    "twitter": "",
+    "twitter": "https://x.com/SnBZt6eRCdz7lQw",
     "instagram": "",
     "official": ""
   },
