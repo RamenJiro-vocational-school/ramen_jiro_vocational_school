@@ -14,8 +14,8 @@ class MyApp extends StatelessWidget {
       title: 'ラーメン二郎データベース',
       theme: ThemeData(
         primarySwatch: Colors.yellow,
-        scaffoldBackgroundColor: const Color(0xFFFFFBE6), // 薄黄色の背景にしても◎
-        useMaterial3: true, // Material3を使う場合（好みで調整）
+        scaffoldBackgroundColor: const Color(0xFFFFFBE6), // 薄黄色の背景か悩み中
+        useMaterial3: true, // Material3を使う場合
       ),
       home: const HomePage(), // ← ここをホームページに変更
     );
