@@ -2,13 +2,64 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import '../models/jiro_store.dart';
 
-class StoreDetailPage extends StatelessWidget {
+class StoreDetailPage extends StatefulWidget {
   const StoreDetailPage({super.key, required this.store});
   final JiroStore store;
 
+  @override
+  State<StoreDetailPage> createState() => _StoreDetailPageState();
+}
+
+class _StoreDetailPageState extends State<StoreDetailPage> {
   static const _weekdayJp = ['月', '火', '水', '木', '金', '土', '日'];
+
+  bool _isFav = false;
+  bool _loadingFav = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadFavorite();
+  }
+
+  Future<void> _loadFavorite() async {
+    final prefs = await SharedPreferences.getInstance();
+    final list = prefs.getStringList('favorites') ?? <String>[];
+    setState(() {
+      _isFav = list.contains(widget.store.name);
+      _loadingFav = false;
+    });
+  }
+
+  Future<void> _toggleFavorite() async {
+    final prefs = await SharedPreferences.getInstance();
+    final list = prefs.getStringList('favorites') ?? <String>[];
+    final name = widget.store.name;
+
+    setState(() => _isFav = !_isFav);
+
+    if (_isFav) {
+      if (!list.contains(name)) list.add(name);
+      await prefs.setStringList('favorites', list);
+      if (mounted) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('⭐「$name」をお気に入りに追加')));
+      }
+    } else {
+      list.remove(name);
+      await prefs.setStringList('favorites', list);
+      if (mounted) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('☆「$name」をお気に入りから解除')));
+      }
+    }
+  }
 
   // --- URL起動共通 ---
   Future<void> _launchUrl(String url) async {
@@ -17,13 +68,13 @@ class StoreDetailPage extends StatelessWidget {
       uri,
       mode: LaunchMode.externalApplication, // Web: 新しいタブ / 他: 外部アプリ
     )) {
-      // 失敗してもアプリが落ちないように
       debugPrint('Could not launch $url');
     }
   }
 
   /// Googleマップ（検索）を開く
   void _openGoogleMaps() {
+    final store = widget.store;
     if (store.lat != null && store.lng != null) {
       final url =
           'https://www.google.com/maps/search/?api=1&query=${store.lat},${store.lng}';
@@ -37,10 +88,12 @@ class StoreDetailPage extends StatelessWidget {
 
   /// 営業時間テーブル（曜日ごと）
   Widget _buildHoursTable() {
+    final store = widget.store;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: List.generate(7, (i) {
         final weekday = i + 1; // 1..7
+        // モデルに hoursOf(weekday) がある前提。無い場合は business_hours マップを直接読むように変更してね。
         final hours = store.hoursOf(weekday);
         final display = (hours.isEmpty) ? '休' : hours;
         return Padding(
@@ -65,6 +118,7 @@ class StoreDetailPage extends StatelessWidget {
 
   /// レンゲ/麺固め/卓上調味料/マイコールなど
   Widget _buildChipRow() {
+    final store = widget.store;
     final chips = <Widget>[];
 
     if (store.hasRenge != null) {
@@ -88,6 +142,7 @@ class StoreDetailPage extends StatelessWidget {
 
   /// ミニ地図（OSM）※タップでGoogleマップを開く
   Widget _buildMiniMap() {
+    final store = widget.store;
     if (store.lat == null || store.lng == null) return const SizedBox.shrink();
 
     final center = LatLng(store.lat!, store.lng!);
@@ -153,8 +208,9 @@ class StoreDetailPage extends StatelessWidget {
 
   /// SNS/公式リンク（存在するものだけボタン表示）
   Widget _buildLinks() {
+    final sns = widget.store.sns ?? {};
     final links = <Widget>[];
-    final sns = store.sns ?? {};
+
     void add(String label, String? url) {
       if (url != null && url.trim().isNotEmpty) {
         links.add(
@@ -177,15 +233,38 @@ class StoreDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final store = widget.store;
+
     return Scaffold(
       backgroundColor: const Color(0xFFFFF8D9),
-      appBar: AppBar(title: Text(store.name)),
+      appBar: AppBar(
+        title: Text(store.name),
+        actions: [
+          if (_loadingFav)
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 12),
+              child: Center(
+                child: SizedBox(
+                  width: 18,
+                  height: 18,
+                  child: CircularProgressIndicator(strokeWidth: 2),
+                ),
+              ),
+            )
+          else
+            IconButton(
+              tooltip: _isFav ? 'お気に入り解除' : 'お気に入りに追加',
+              icon: Icon(_isFav ? Icons.star : Icons.star_border),
+              onPressed: _toggleFavorite,
+            ),
+        ],
+      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.fromLTRB(16, 12, 16, 32),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // 店名
+            // 店名（大見出し）
             Text(
               store.name,
               style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
