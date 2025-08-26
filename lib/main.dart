@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'pages/home_page.dart';
 import 'pages/store_list.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  // いまの FavoritesService は全て static なので初期化は不要
   runApp(const MyApp());
 }
 
@@ -33,8 +35,8 @@ class _RootTabsState extends State<RootTabs> {
   int _index = 0;
 
   final _pages = const [
-    HomePage(), // 本日の営業状況ページ（トップページ）
-    StoreListPage(), // 都道府県フィルタ＋検索
+    HomePage(), // 本日の営業状況
+    StoreListPage(), // 県別一覧＋検索
   ];
 
   @override

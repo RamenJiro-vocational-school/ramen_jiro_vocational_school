@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/jiro_store.dart';
+import '../utils/favorites_service.dart';
 import 'store_detail.dart';
 
 class StoreListPage extends StatefulWidget {
@@ -16,7 +16,7 @@ class StoreListPage extends StatefulWidget {
 class _StoreListPageState extends State<StoreListPage> {
   late Future<List<JiroStore>> _allStoresFuture;
 
-  // 検索やフィルタで使うキャッシュ
+  // 検索やフィルタ用キャッシュ
   List<JiroStore> _allStoresCache = [];
 
   // エリア選択
@@ -31,7 +31,12 @@ class _StoreListPageState extends State<StoreListPage> {
   void initState() {
     super.initState();
     _allStoresFuture = _loadAllStores();
-    _loadFavorites();
+    _reloadFavorites();
+  }
+
+  Future<void> _reloadFavorites() async {
+    _favorites = await FavoritesService.load();
+    if (mounted) setState(() {});
   }
 
   Future<List<JiroStore>> _loadAllStores() async {
@@ -45,23 +50,14 @@ class _StoreListPageState extends State<StoreListPage> {
     // キャッシュ
     _allStoresCache = List<JiroStore>.from(list);
 
-    // エリア一覧を動的に生成
+    // エリア一覧（動的）
     final areas = list.map((e) => e.area).toSet().toList()..sort();
-    setState(() {
-      _areas = ['すべて', ...areas];
-    });
+    _areas = ['すべて', ...areas];
+
     return list;
   }
 
-  Future<void> _loadFavorites() async {
-    final prefs = await SharedPreferences.getInstance();
-    final list = prefs.getStringList('favorites') ?? <String>[];
-    setState(() {
-      _favorites = list.toSet();
-    });
-  }
-
-  // 検索UIを開く
+  // 検索UI
   Future<void> _openSearch() async {
     if (_allStoresCache.isEmpty) {
       final loaded = await _allStoresFuture;
@@ -73,17 +69,17 @@ class _StoreListPageState extends State<StoreListPage> {
       context: context,
       delegate: StoreSearchDelegate(allStores: _allStoresCache),
     );
-    // （検索結果から遷移→戻ってきた後に）お気に入りの変化を反映
-    if (mounted) _loadFavorites();
+
+    // 戻ってきたら★を取り直す
+    if (mounted) _reloadFavorites();
   }
 
-  // 詳細から戻ってきたら★を取り直す
   Future<void> _openDetail(JiroStore store) async {
     await Navigator.push(
       context,
       MaterialPageRoute(builder: (_) => StoreDetailPage(store: store)),
     );
-    if (mounted) _loadFavorites();
+    if (mounted) _reloadFavorites();
   }
 
   @override
@@ -107,16 +103,16 @@ class _StoreListPageState extends State<StoreListPage> {
       ),
       body: FutureBuilder<List<JiroStore>>(
         future: _allStoresFuture,
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return Center(child: Text('エラー: ${snapshot.error}'));
+        builder: (context, snap) {
+          if (snap.hasError) {
+            return Center(child: Text('エラー: ${snap.error}'));
           }
-          if (!snapshot.hasData) {
+          if (!snap.hasData) {
             return const Center(child: CircularProgressIndicator());
           }
 
           // 基本リスト
-          final all = snapshot.data!;
+          final all = snap.data!;
 
           // エリア絞り
           List<JiroStore> filtered = (_selectedArea == 'すべて')
@@ -130,10 +126,6 @@ class _StoreListPageState extends State<StoreListPage> {
                 .toList();
           }
 
-          // 並び順（創業順にしたいなら JSON の順番を維持するのでソート無し）
-          // store.name 順にしたい場合は↓を有効化
-          // filtered.sort((a, b) => a.name.compareTo(b.name));
-
           return Column(
             children: [
               // エリアフィルタ（横スクロールのチップ）
@@ -145,18 +137,18 @@ class _StoreListPageState extends State<StoreListPage> {
                     vertical: 8,
                   ),
                   scrollDirection: Axis.horizontal,
+                  itemCount: _areas.length,
+                  separatorBuilder: (_, __) => const SizedBox(width: 8),
                   itemBuilder: (context, i) {
                     final area = _areas[i];
                     final selected = area == _selectedArea;
                     return ChoiceChip(
                       label: Text(area),
                       selected: selected,
-                      onSelected: (_) => setState(() => _selectedArea = area),
                       selectedColor: const Color(0xFFFFF000),
+                      onSelected: (_) => setState(() => _selectedArea = area),
                     );
                   },
-                  separatorBuilder: (_, __) => const SizedBox(width: 8),
-                  itemCount: _areas.length,
                 ),
               ),
 
@@ -184,7 +176,6 @@ class _StoreListPageState extends State<StoreListPage> {
                         borderRadius: BorderRadius.circular(12),
                         child: Stack(
                           children: [
-                            // 看板タイル
                             Container(
                               decoration: BoxDecoration(
                                 color: const Color(0xFFFFF000),
@@ -205,7 +196,6 @@ class _StoreListPageState extends State<StoreListPage> {
                                 ),
                               ),
                             ),
-                            // 右上に★バッジ
                             if (isFav)
                               Positioned(
                                 top: 4,
@@ -285,10 +275,7 @@ class StoreSearchDelegate extends SearchDelegate<JiroStore?> {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (_) => StoreDetailPage(store: s)),
-            ).then((_) {
-              // 検索画面から戻ってきた後、呼び出し元でお気に入りを更新させたいときは
-              // close(context, s); などで結果を返してもOK
-            });
+            );
           },
         );
       },

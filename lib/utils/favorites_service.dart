@@ -1,42 +1,44 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
+/// お気に入り（★）を端末ローカルに保存するだけの超シンプルなサービス。
+/// すべて static に統一して、API名も load / toggle に一本化。
 class FavoritesService {
-  static const _key = 'favorite_store_names';
+  FavoritesService._();
 
-  static Future<Set<String>> loadFavorites() async {
-    final prefs = await SharedPreferences.getInstance();
-    final list = prefs.getStringList(_key) ?? <String>[];
-    return list.toSet();
-  }
+  static const String _key = 'favorite_store_names';
 
+  /// 保存されている★店名セットを取得
   static Future<Set<String>> load() async {
     final prefs = await SharedPreferences.getInstance();
-    final list = prefs.getStringList(_key) ?? <String>[];
+    final list = prefs.getStringList(_key) ?? const <String>[];
     return list.toSet();
   }
 
+  /// 内部用：セットを丸ごと保存
   static Future<void> _save(Set<String> names) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setStringList(_key, names.toList());
   }
 
-  /// その店が★かどうかの判別！
+  /// その店が★かどうか
   static Future<bool> isFavorite(String storeName) async {
     final favs = await load();
     return favs.contains(storeName);
   }
 
-  /// ★をトグルして、現在の状態（true=お気に入り）を返すやつ
+  /// ★をトグルし、現在の状態（true=お気に入り）を返す
   static Future<bool> toggle(String storeName) async {
-    final favs = await load();
-    if (favs.contains(storeName)) {
-      favs.remove(storeName);
-      await _save(favs);
-      return false;
+    final prefs = await SharedPreferences.getInstance();
+    final set = (prefs.getStringList(_key) ?? <String>[]).toSet();
+    final bool nowFav;
+    if (set.contains(storeName)) {
+      set.remove(storeName);
+      nowFav = false;
     } else {
-      favs.add(storeName);
-      await _save(favs);
-      return true;
+      set.add(storeName);
+      nowFav = true;
     }
+    await prefs.setStringList(_key, set.toList());
+    return nowFav;
   }
 }
