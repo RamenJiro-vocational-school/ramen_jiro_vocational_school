@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
+
 import '../models/jiro_store.dart';
 import 'store_detail.dart';
-import 'store_list.dart';
+import '../utils/favorites_service.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -15,10 +16,19 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   late Future<List<JiroStore>> allStoresFuture;
 
+  // お気に入り（名前のSet）
+  Set<String> _favorites = {};
+
   @override
   void initState() {
     super.initState();
     allStoresFuture = loadAllStores();
+    _loadFavorites();
+  }
+
+  Future<void> _loadFavorites() async {
+    _favorites = await FavoritesService.loadFavorites();
+    if (mounted) setState(() {});
   }
 
   Future<List<JiroStore>> loadAllStores() async {
@@ -74,29 +84,24 @@ class _HomePageState extends State<HomePage> {
       case "break":
         return const Color(0xFFDDD000); // 暗めの黄色
       default:
-        return Colors.grey[400]!; // グレー
+        return Colors.grey; // 定休
     }
+  }
+
+  Future<void> _openDetail(JiroStore store) async {
+    await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => StoreDetailPage(store: store)),
+    );
+    // 詳細で★が変わったかもしれないので再読込
+    await _loadFavorites();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFFFF8D9),
-      appBar: AppBar(
-        title: const Text('ラーメン二郎データベース'),
-        actions: [
-          IconButton(
-            tooltip: '店舗一覧（エリア別）',
-            icon: const Icon(Icons.list_alt),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => const StoreListPage()),
-              );
-            },
-          ),
-        ],
-      ),
+      appBar: AppBar(title: const Text('ラーメン二郎データベース')),
       body: FutureBuilder<List<JiroStore>>(
         future: allStoresFuture,
         builder: (context, snapshot) {
@@ -108,50 +113,63 @@ class _HomePageState extends State<HomePage> {
                 crossAxisCount: 3,
                 crossAxisSpacing: 8,
                 mainAxisSpacing: 8,
-                childAspectRatio: 2.5,
+                childAspectRatio: 2.5, // 横長で看板風
                 children: stores.map((store) {
                   final statusInfo = getStoreStatus(store);
                   final color = getStatusColor(statusInfo["status"]);
-                  final hours = statusInfo["hours"];
+                  final hours = statusInfo["hours"] as String? ?? '';
+                  final isFav = _favorites.contains(store.name);
 
-                  return GestureDetector(
-                    onTap: () {
-                      // 詳細ページへ遷移
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => StoreDetailPage(store: store),
-                        ),
-                      );
-                    },
-                    child: Container(
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: color,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            store.name,
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                            ),
-                            textAlign: TextAlign.center,
+                  return InkWell(
+                    borderRadius: BorderRadius.circular(12),
+                    onTap: () => _openDetail(store),
+                    child: Stack(
+                      children: [
+                        Container(
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            color: color,
+                            borderRadius: BorderRadius.circular(12),
                           ),
-                          if (hours.isNotEmpty)
-                            Text(
-                              hours,
-                              style: const TextStyle(
-                                fontSize: 10,
-                                color: Colors.black,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                store.name,
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                ),
+                                textAlign: TextAlign.center,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
                               ),
+                              if (hours.isNotEmpty)
+                                Text(
+                                  hours,
+                                  style: const TextStyle(
+                                    fontSize: 10,
+                                    color: Colors.black,
+                                  ),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                            ],
+                          ),
+                        ),
+                        // ★バッジ（右上）
+                        if (isFav)
+                          Positioned(
+                            right: 4,
+                            top: 4,
+                            child: Icon(
+                              Icons.star,
+                              size: 18,
+                              color: Colors.orange.shade700,
                             ),
-                        ],
-                      ),
+                          ),
+                      ],
                     ),
                   );
                 }).toList(),

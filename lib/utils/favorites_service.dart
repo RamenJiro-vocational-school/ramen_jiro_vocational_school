@@ -3,6 +3,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 class FavoritesService {
   static const _key = 'favorite_store_names';
 
+  static Future<Set<String>> loadFavorites() async {
+    final prefs = await SharedPreferences.getInstance();
+    final list = prefs.getStringList(_key) ?? <String>[];
+    return list.toSet();
+  }
+
   static Future<Set<String>> load() async {
     final prefs = await SharedPreferences.getInstance();
     final list = prefs.getStringList(_key) ?? <String>[];
