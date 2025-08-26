@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/jiro_store.dart';
 import 'store_detail.dart';
@@ -15,16 +16,22 @@ class StoreListPage extends StatefulWidget {
 class _StoreListPageState extends State<StoreListPage> {
   late Future<List<JiroStore>> _allStoresFuture;
 
-  // 検索で即使えるようキャッシュも保持
+  // 検索やフィルタで使うキャッシュ
   List<JiroStore> _allStoresCache = [];
 
+  // エリア選択
   String _selectedArea = 'すべて';
   List<String> _areas = const [];
+
+  // お気に入り
+  Set<String> _favorites = {};
+  bool _onlyFavorites = false;
 
   @override
   void initState() {
     super.initState();
     _allStoresFuture = _loadAllStores();
+    _loadFavorites();
   }
 
   Future<List<JiroStore>> _loadAllStores() async {
@@ -38,7 +45,7 @@ class _StoreListPageState extends State<StoreListPage> {
     // キャッシュ
     _allStoresCache = List<JiroStore>.from(list);
 
-    // エリア(都道府県)一覧を動的に生成
+    // エリア一覧を動的に生成
     final areas = list.map((e) => e.area).toSet().toList()..sort();
     setState(() {
       _areas = ['すべて', ...areas];
@@ -46,9 +53,16 @@ class _StoreListPageState extends State<StoreListPage> {
     return list;
   }
 
+  Future<void> _loadFavorites() async {
+    final prefs = await SharedPreferences.getInstance();
+    final list = prefs.getStringList('favorites') ?? <String>[];
+    setState(() {
+      _favorites = list.toSet();
+    });
+  }
+
   // 検索UIを開く
   Future<void> _openSearch() async {
-    // キャッシュが空のときは読み込み完了を待つ
     if (_allStoresCache.isEmpty) {
       final loaded = await _allStoresFuture;
       _allStoresCache = loaded;
@@ -59,6 +73,17 @@ class _StoreListPageState extends State<StoreListPage> {
       context: context,
       delegate: StoreSearchDelegate(allStores: _allStoresCache),
     );
+    // （検索結果から遷移→戻ってきた後に）お気に入りの変化を反映
+    if (mounted) _loadFavorites();
+  }
+
+  // 詳細から戻ってきたら★を取り直す
+  Future<void> _openDetail(JiroStore store) async {
+    await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => StoreDetailPage(store: store)),
+    );
+    if (mounted) _loadFavorites();
   }
 
   @override
@@ -68,6 +93,11 @@ class _StoreListPageState extends State<StoreListPage> {
       appBar: AppBar(
         title: const Text('店舗一覧（エリア別）'),
         actions: [
+          IconButton(
+            tooltip: _onlyFavorites ? 'すべて表示' : 'お気に入りだけ表示',
+            icon: Icon(_onlyFavorites ? Icons.star : Icons.star_border),
+            onPressed: () => setState(() => _onlyFavorites = !_onlyFavorites),
+          ),
           IconButton(
             tooltip: '店舗検索',
             icon: const Icon(Icons.search),
@@ -85,13 +115,24 @@ class _StoreListPageState extends State<StoreListPage> {
             return const Center(child: CircularProgressIndicator());
           }
 
+          // 基本リスト
           final all = snapshot.data!;
-          final filtered = (_selectedArea == 'すべて')
+
+          // エリア絞り
+          List<JiroStore> filtered = (_selectedArea == 'すべて')
               ? List<JiroStore>.from(all)
               : all.where((s) => s.area == _selectedArea).toList();
 
-          // 店名順で並べ替え（お好みで）
-          filtered.sort((a, b) => a.name.compareTo(b.name));
+          // お気に入り絞り
+          if (_onlyFavorites) {
+            filtered = filtered
+                .where((s) => _favorites.contains(s.name))
+                .toList();
+          }
+
+          // 並び順（創業順にしたいなら JSON の順番を維持するのでソート無し）
+          // store.name 順にしたい場合は↓を有効化
+          // filtered.sort((a, b) => a.name.compareTo(b.name));
 
           return Column(
             children: [
@@ -136,33 +177,46 @@ class _StoreListPageState extends State<StoreListPage> {
                     itemCount: filtered.length,
                     itemBuilder: (context, index) {
                       final store = filtered[index];
+                      final isFav = _favorites.contains(store.name);
+
                       return InkWell(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => StoreDetailPage(store: store),
-                            ),
-                          );
-                        },
+                        onTap: () => _openDetail(store),
                         borderRadius: BorderRadius.circular(12),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: const Color(0xFFFFF000),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          alignment: Alignment.center,
-                          padding: const EdgeInsets.symmetric(horizontal: 6),
-                          child: Text(
-                            store.name,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
+                        child: Stack(
+                          children: [
+                            // 看板タイル
+                            Container(
+                              decoration: BoxDecoration(
+                                color: const Color(0xFFFFF000),
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              alignment: Alignment.center,
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 6,
+                              ),
+                              child: Text(
+                                store.name,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                ),
+                              ),
                             ),
-                          ),
+                            // 右上に★バッジ
+                            if (isFav)
+                              Positioned(
+                                top: 4,
+                                right: 4,
+                                child: Icon(
+                                  Icons.star,
+                                  size: 18,
+                                  color: Colors.orange.shade700,
+                                ),
+                              ),
+                          ],
                         ),
                       );
                     },
@@ -231,7 +285,10 @@ class StoreSearchDelegate extends SearchDelegate<JiroStore?> {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (_) => StoreDetailPage(store: s)),
-            );
+            ).then((_) {
+              // 検索画面から戻ってきた後、呼び出し元でお気に入りを更新させたいときは
+              // close(context, s); などで結果を返してもOK
+            });
           },
         );
       },
