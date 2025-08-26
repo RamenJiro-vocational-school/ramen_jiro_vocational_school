@@ -27,7 +27,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> _reloadFavorites() async {
-    _favorites = await FavoritesService.load();
+    _favorites = await FavoritesService.loadFavorites();
     if (mounted) setState(() {});
   }
 

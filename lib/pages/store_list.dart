@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
 import '../models/jiro_store.dart';
-import '../utils/favorites_service.dart';
 import 'store_detail.dart';
+import '../utils/favorites_service.dart';
 
 class StoreListPage extends StatefulWidget {
   const StoreListPage({super.key});
@@ -16,7 +16,7 @@ class StoreListPage extends StatefulWidget {
 class _StoreListPageState extends State<StoreListPage> {
   late Future<List<JiroStore>> _allStoresFuture;
 
-  // 検索やフィルタ用キャッシュ
+  // 検索やフィルタで使うキャッシュ
   List<JiroStore> _allStoresCache = [];
 
   // エリア選択
@@ -31,12 +31,7 @@ class _StoreListPageState extends State<StoreListPage> {
   void initState() {
     super.initState();
     _allStoresFuture = _loadAllStores();
-    _reloadFavorites();
-  }
-
-  Future<void> _reloadFavorites() async {
-    _favorites = await FavoritesService.load();
-    if (mounted) setState(() {});
+    _loadFavorites();
   }
 
   Future<List<JiroStore>> _loadAllStores() async {
@@ -50,11 +45,20 @@ class _StoreListPageState extends State<StoreListPage> {
     // キャッシュ
     _allStoresCache = List<JiroStore>.from(list);
 
-    // エリア一覧（動的）
+    // エリア一覧を動的に生成
     final areas = list.map((e) => e.area).toSet().toList()..sort();
-    _areas = ['すべて', ...areas];
-
+    setState(() {
+      _areas = ['すべて', ...areas];
+    });
     return list;
+  }
+
+  Future<void> _loadFavorites() async {
+    final favs = await FavoritesService.loadFavorites();
+    if (!mounted) return;
+    setState(() {
+      _favorites = favs;
+    });
   }
 
   // 検索UI
@@ -70,16 +74,17 @@ class _StoreListPageState extends State<StoreListPage> {
       delegate: StoreSearchDelegate(allStores: _allStoresCache),
     );
 
-    // 戻ってきたら★を取り直す
-    if (mounted) _reloadFavorites();
+    // 検索から戻ってきたあとに★を取り直し
+    if (mounted) _loadFavorites();
   }
 
+  // 詳細から戻ってきたら★更新
   Future<void> _openDetail(JiroStore store) async {
     await Navigator.push(
       context,
       MaterialPageRoute(builder: (_) => StoreDetailPage(store: store)),
     );
-    if (mounted) _reloadFavorites();
+    if (mounted) _loadFavorites();
   }
 
   @override
@@ -103,16 +108,16 @@ class _StoreListPageState extends State<StoreListPage> {
       ),
       body: FutureBuilder<List<JiroStore>>(
         future: _allStoresFuture,
-        builder: (context, snap) {
-          if (snap.hasError) {
-            return Center(child: Text('エラー: ${snap.error}'));
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return Center(child: Text('エラー: ${snapshot.error}'));
           }
-          if (!snap.hasData) {
+          if (!snapshot.hasData) {
             return const Center(child: CircularProgressIndicator());
           }
 
           // 基本リスト
-          final all = snap.data!;
+          final all = snapshot.data!;
 
           // エリア絞り
           List<JiroStore> filtered = (_selectedArea == 'すべて')
@@ -137,21 +142,20 @@ class _StoreListPageState extends State<StoreListPage> {
                     vertical: 8,
                   ),
                   scrollDirection: Axis.horizontal,
-                  itemCount: _areas.length,
-                  separatorBuilder: (_, __) => const SizedBox(width: 8),
                   itemBuilder: (context, i) {
                     final area = _areas[i];
                     final selected = area == _selectedArea;
                     return ChoiceChip(
                       label: Text(area),
                       selected: selected,
-                      selectedColor: const Color(0xFFFFF000),
                       onSelected: (_) => setState(() => _selectedArea = area),
+                      selectedColor: const Color(0xFFFFF000),
                     );
                   },
+                  separatorBuilder: (_, __) => const SizedBox(width: 8),
+                  itemCount: _areas.length,
                 ),
               ),
-
               const Divider(height: 1),
 
               // グリッド表示（ホームと同じ看板タイル）
@@ -196,6 +200,7 @@ class _StoreListPageState extends State<StoreListPage> {
                                 ),
                               ),
                             ),
+                            // 右上に★バッジ
                             if (isFav)
                               Positioned(
                                 top: 4,
