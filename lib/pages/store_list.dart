@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
 import '../models/jiro_store.dart';
-import 'store_detail.dart';
 import '../utils/favorites_service.dart';
+import 'store_detail.dart';
 
 class StoreListPage extends StatefulWidget {
   const StoreListPage({super.key});
@@ -56,9 +56,7 @@ class _StoreListPageState extends State<StoreListPage> {
   Future<void> _loadFavorites() async {
     final favs = await FavoritesService.loadFavorites();
     if (!mounted) return;
-    setState(() {
-      _favorites = favs;
-    });
+    setState(() => _favorites = favs);
   }
 
   // 検索UI
