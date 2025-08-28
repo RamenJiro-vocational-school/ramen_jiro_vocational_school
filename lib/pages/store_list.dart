@@ -136,7 +136,7 @@ class _StoreListPageState extends State<StoreListPage> {
           // お気に入り絞り
           if (_onlyFavorites) {
             filtered = filtered
-                .where((s) => _favorites.contains(s.name))
+                .where((s) => _favorites.contains(s.name.trim()))
                 .toList();
           }
 

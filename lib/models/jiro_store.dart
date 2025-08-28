@@ -56,7 +56,7 @@ class JiroStore {
   factory JiroStore.fromJson(Map<String, dynamic> json) {
     Map<String, String>? _hours;
     if (json['business_hours'] != null) {
-      // 動的 → Map<String, String> へ安全に変換
+      // 動的 → Map<String, String> へ変換
       _hours = (json['business_hours'] as Map).map(
         (k, v) => MapEntry(k.toString(), v?.toString() ?? ''),
       );
