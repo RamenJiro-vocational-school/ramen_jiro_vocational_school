@@ -16,6 +16,8 @@ class StoreListPage extends StatefulWidget {
 class _StoreListPageState extends State<StoreListPage> {
   late Future<List<JiroStore>> _allStoresFuture;
 
+  bool _loadingFavorites = true;
+
   // 検索やフィルタで使うキャッシュ
   List<JiroStore> _allStoresCache = [];
 
@@ -56,7 +58,10 @@ class _StoreListPageState extends State<StoreListPage> {
   Future<void> _loadFavorites() async {
     final favs = await FavoritesService.loadFavorites();
     if (!mounted) return;
-    setState(() => _favorites = favs);
+    setState(() {
+      _favorites = favs;
+      _loadingFavorites = false;
+    });
   }
 
   // 検索UI
@@ -87,6 +92,10 @@ class _StoreListPageState extends State<StoreListPage> {
 
   @override
   Widget build(BuildContext context) {
+    if (_loadingFavorites) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
     return Scaffold(
       backgroundColor: const Color(0xFFFFF8D9),
       appBar: AppBar(
@@ -95,7 +104,9 @@ class _StoreListPageState extends State<StoreListPage> {
           IconButton(
             tooltip: _onlyFavorites ? 'すべて表示' : 'お気に入りだけ表示',
             icon: Icon(_onlyFavorites ? Icons.star : Icons.star_border),
-            onPressed: () => setState(() => _onlyFavorites = !_onlyFavorites),
+            onPressed: () => setState(() {
+              _onlyFavorites = !_onlyFavorites;
+            }),
           ),
           IconButton(
             tooltip: '店舗検索',
