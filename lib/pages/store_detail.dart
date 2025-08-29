@@ -5,6 +5,7 @@ import 'package:latlong2/latlong.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/jiro_store.dart';
+import '../utils/favorites_service.dart';
 
 class StoreDetailPage extends StatefulWidget {
   const StoreDetailPage({super.key, required this.store});
@@ -27,38 +28,22 @@ class _StoreDetailPageState extends State<StoreDetailPage> {
   }
 
   Future<void> _loadFavorite() async {
-    final prefs = await SharedPreferences.getInstance();
-    final list = prefs.getStringList('favorites') ?? <String>[];
+    final isFav = await FavoritesService.isFavorite(widget.store.name);
+    if (!mounted) return;
     setState(() {
-      _isFav = list.contains(widget.store.name);
+      _isFav = isFav;
       _loadingFav = false;
     });
   }
 
   Future<void> _toggleFavorite() async {
-    final prefs = await SharedPreferences.getInstance();
-    final list = prefs.getStringList('favorites') ?? <String>[];
+    final nowFav = await FavoritesService.toggle(widget.store.name);
+    if (!mounted) return;
+    setState(() => _isFav = nowFav);
+
     final name = widget.store.name;
-
-    setState(() => _isFav = !_isFav);
-
-    if (_isFav) {
-      if (!list.contains(name)) list.add(name);
-      await prefs.setStringList('favorites', list);
-      if (mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text('⭐「$name」をお気に入りに追加')));
-      }
-    } else {
-      list.remove(name);
-      await prefs.setStringList('favorites', list);
-      if (mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text('☆「$name」をお気に入りから解除')));
-      }
-    }
+    final msg = nowFav ? '⭐「$name」をお気に入りに追加' : '☆「$name」をお気に入りから解除';
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
   }
 
   // --- URL起動共通 ---
