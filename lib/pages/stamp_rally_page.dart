@@ -73,7 +73,11 @@ class _StampRallyPageState extends State<StampRallyPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('スタンプラリー'),
+        centerTitle: true,
+        title: const Text(
+          'スタンプラリー',
+          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+        ),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
