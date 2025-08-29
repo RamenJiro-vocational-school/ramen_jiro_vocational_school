@@ -45,15 +45,15 @@ class _StoreDetailPageState extends State<StoreDetailPage> {
     });
   }
 
-  Future<void> _handleVisit() async {
-    final count = await VisitService.incrementVisit(widget.store.name);
-    if (!mounted) return;
-    setState(() => _visitCount = count);
+  // Future<void> _handleVisit() async {
+  //   final count = await VisitService.incrementVisit(widget.store.name);
+  //   if (!mounted) return;
+  //   setState(() => _visitCount = count);
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('🏁 ${widget.store.name} を訪問！ ($count 回目)')),
-    );
-  }
+  //   ScaffoldMessenger.of(context).showSnackBar(
+  //     SnackBar(content: Text('🏁 ${widget.store.name} を訪問！ ($count 回目)')),
+  //   );
+  // }
 
   Future<void> _toggleFavorite() async {
     final nowFav = await FavoritesService.toggle(widget.store.name);
@@ -96,60 +96,64 @@ class _StoreDetailPageState extends State<StoreDetailPage> {
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: List.generate(7, (i) {
-        final weekday = i + 1;
-        final hours = store.hoursOf(weekday);
-        final display = hours.isEmpty ? '休' : hours;
+      children: [
+        // 営業時間（曜日ごと）表示だけする
+        ...List.generate(7, (i) {
+          final weekday = i + 1;
+          final hours = store.hoursOf(weekday);
+          final display = hours.isEmpty ? '休' : hours;
 
-        return Padding(
-          padding: const EdgeInsets.symmetric(vertical: 2),
-          child: Row(
-            children: [
-              SizedBox(
-                width: 28,
-                child: Text(
-                  _weekdayJp[i],
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ),
-              const SizedBox(width: 8),
-
-              Expanded(child: Text(display)),
-
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  IconButton(
-                    icon: const Icon(Icons.remove_circle_outline),
-                    tooltip: '1回減らす',
-                    onPressed: _visitCount > 0
-                        ? () async {
-                            final newCount = await VisitService.decrementVisit(
-                              widget.store.name,
-                            );
-                            if (!mounted) return;
-                            setState(() => _visitCount = newCount);
-                          }
-                        : null,
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 2),
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 28,
+                  child: Text(
+                    _weekdayJp[i],
+                    style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  Text('$_visitCount 回目'),
-                  IconButton(
-                    icon: const Icon(Icons.add_circle_outline),
-                    tooltip: '1回追加',
-                    onPressed: () async {
-                      final newCount = await VisitService.incrementVisit(
+                ),
+                const SizedBox(width: 8),
+                Expanded(child: Text(display)),
+              ],
+            ),
+          );
+        }),
+
+        const SizedBox(height: 12),
+
+        // ↓（訪問回数 +− ボタン）
+        Row(
+          children: [
+            IconButton(
+              icon: const Icon(Icons.remove_circle_outline),
+              tooltip: '1回減らす',
+              onPressed: _visitCount > 0
+                  ? () async {
+                      final newCount = await VisitService.decrementVisit(
                         widget.store.name,
                       );
                       if (!mounted) return;
                       setState(() => _visitCount = newCount);
-                    },
-                  ),
-                ],
-              ),
-            ],
-          ),
-        );
-      }),
+                    }
+                  : null,
+            ),
+            Text('$_visitCount 回目'),
+            IconButton(
+              icon: const Icon(Icons.add_circle_outline),
+              tooltip: '1回追加',
+              onPressed: () async {
+                final newCount = await VisitService.incrementVisit(
+                  widget.store.name,
+                );
+                if (!mounted) return;
+                setState(() => _visitCount = newCount);
+              },
+            ),
+          ],
+        ),
+      ],
     );
   }
 
