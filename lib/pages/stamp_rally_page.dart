@@ -107,7 +107,7 @@ class _StampRallyPageState extends State<StampRallyPage> {
       ),
 
       body: Padding(
-        padding: const EdgeInsets.all(12),
+        padding: const EdgeInsets.all(4),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -121,8 +121,9 @@ class _StampRallyPageState extends State<StampRallyPage> {
                 itemCount: _stores.length,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 6,
-                  mainAxisSpacing: 8,
-                  crossAxisSpacing: 8,
+                  mainAxisSpacing: 6,
+                  crossAxisSpacing: 6,
+                  childAspectRatio: 1.6, // ← 高さ・幅の比率
                 ),
                 itemBuilder: (context, index) {
                   final store = _stores[index];
@@ -134,10 +135,10 @@ class _StampRallyPageState extends State<StampRallyPage> {
                       color: isVisited
                           ? Colors.red.shade100
                           : Colors.yellow.shade200,
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadius.circular(4),
                       border: Border.all(
                         color: isVisited ? Colors.red : Colors.grey.shade400,
-                        width: 2,
+                        width: 1,
                       ),
                     ),
                     alignment: Alignment.center,
