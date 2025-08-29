@@ -123,7 +123,7 @@ class _StampRallyPageState extends State<StampRallyPage> {
                   crossAxisCount: 6,
                   mainAxisSpacing: 6,
                   crossAxisSpacing: 6,
-                  childAspectRatio: 1.6, // ← 高さ・幅の比率
+                  childAspectRatio: 1.4, // ← 高さ・幅の比率
                 ),
                 itemBuilder: (context, index) {
                   final store = _stores[index];
