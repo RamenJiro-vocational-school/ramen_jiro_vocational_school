@@ -139,7 +139,7 @@ class _StoreDetailPageState extends State<StoreDetailPage> {
                     }
                   : null,
             ),
-            Text('$_visitCount 回目'),
+            Text('訪問 $_visitCount 回目'),
             IconButton(
               icon: const Icon(Icons.add_circle_outline),
               tooltip: '1回追加',

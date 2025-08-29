@@ -28,6 +28,7 @@ class JiroStore {
   final bool? stamp;
   final bool? visited;
   final String? customCall;
+  final int? visitCount; //訪問回数反映
 
   JiroStore({
     required this.name,
@@ -51,6 +52,7 @@ class JiroStore {
     this.stamp,
     this.visited,
     this.customCall,
+    this.visitCount,
   });
 
   factory JiroStore.fromJson(Map<String, dynamic> json) {
@@ -91,6 +93,7 @@ class JiroStore {
       stamp: json['stamp'] as bool?,
       visited: json['visited'] as bool?,
       customCall: json['customCall'],
+      visitCount: json['visitCount'] as int?,
     );
   }
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'pages/home_page.dart';
 import 'pages/store_list.dart';
+import 'pages/stamp_rally_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

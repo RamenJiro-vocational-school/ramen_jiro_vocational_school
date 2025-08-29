@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../models/jiro_store.dart';
 import '../utils/visit_service.dart';
+import 'dart:convert';
+import 'package:flutter/services.dart' show rootBundle;
 
 class StampRallyPage extends StatefulWidget {
   const StampRallyPage({super.key});
@@ -10,46 +12,33 @@ class StampRallyPage extends StatefulWidget {
 }
 
 class _StampRallyPageState extends State<StampRallyPage> {
-  // 仮データ（あとで全部の店舗データ読み込むようにする）
-  final List<JiroStore> _dummyStores = [
-    JiroStore(
-      name: '三田本店',
-      area: '東京',
-      address: '',
-      openDays: [1, 2, 3, 4, 5],
-      businessHours: {'1': '11:00-14:00'},
-    ),
-    JiroStore(
-      name: '目黒',
-      area: '東京',
-      address: '',
-      openDays: [1, 2, 3, 4, 5],
-      businessHours: {'1': '11:00-15:00'},
-    ),
-    JiroStore(
-      name: '仙川',
-      area: '東京',
-      address: '',
-      openDays: [1, 2, 3, 4, 5],
-      businessHours: {'1': '11:00-16:00'},
-    ),
-  ];
+  List<JiroStore> _stores = [];
+  Future<void> _loadStores() async {
+    final data = await rootBundle.loadString('assets/json/jiro_stores.json');
+    final jsonList = json.decode(data) as List;
+
+    final stores = jsonList.map((e) => JiroStore.fromJson(e)).toList();
+
+    final counts = <String, int>{};
+    for (final store in stores) {
+      final count = await VisitService.getVisitCount(store.name);
+      counts[store.name] = count;
+    }
+
+    setState(() {
+      _stores = stores;
+      _visitCounts = counts;
+    });
+  }
 
   Map<String, int> _visitCounts = {};
 
   @override
   void initState() {
     super.initState();
-    _loadVisitData();
-  }
-
-  Future<void> _loadVisitData() async {
-    final counts = <String, int>{};
-    for (final store in _dummyStores) {
-      final count = await VisitService.getVisitCount(store.name);
-      counts[store.name] = count;
-    }
-    setState(() => _visitCounts = counts);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _loadStores();
+    });
   }
 
   @override
@@ -59,14 +48,14 @@ class _StampRallyPageState extends State<StampRallyPage> {
       body: Padding(
         padding: const EdgeInsets.all(12),
         child: GridView.builder(
-          itemCount: _dummyStores.length,
+          itemCount: _stores.length,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 4,
             mainAxisSpacing: 12,
             crossAxisSpacing: 12,
           ),
           itemBuilder: (context, index) {
-            final store = _dummyStores[index];
+            final store = _stores[index];
             final count = _visitCounts[store.name] ?? 0;
 
             return Container(
