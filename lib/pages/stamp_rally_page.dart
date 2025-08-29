@@ -75,7 +75,7 @@ class _StampRallyPageState extends State<StampRallyPage> {
       appBar: AppBar(
         centerTitle: true,
         title: const Text(
-          'スタンプラリー',
+          'ラーメン二郎スタンプラリー',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
         actions: [
