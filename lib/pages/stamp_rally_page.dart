@@ -120,9 +120,9 @@ class _StampRallyPageState extends State<StampRallyPage> {
               child: GridView.builder(
                 itemCount: _stores.length,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 4,
-                  mainAxisSpacing: 12,
-                  crossAxisSpacing: 12,
+                  crossAxisCount: 6,
+                  mainAxisSpacing: 8,
+                  crossAxisSpacing: 8,
                 ),
                 itemBuilder: (context, index) {
                   final store = _stores[index];
@@ -166,7 +166,7 @@ class _StampRallyPageState extends State<StampRallyPage> {
                                 '$count',
                                 style: const TextStyle(
                                   color: Colors.white,
-                                  fontSize: 12,
+                                  fontSize: 10,
                                 ),
                               ),
                             ),
