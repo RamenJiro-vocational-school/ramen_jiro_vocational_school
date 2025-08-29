@@ -112,7 +112,7 @@ class _StampRallyPageState extends State<StampRallyPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              '達成状況：$_visitedTotal / ${_stores.length}',
+              '${_stores.length} 店舗中 $_visitedTotal 店舗訪問済み',
               style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 12),
