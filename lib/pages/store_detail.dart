@@ -104,16 +104,33 @@ class _StoreDetailPageState extends State<StoreDetailPage> {
           return Padding(
             padding: const EdgeInsets.symmetric(vertical: 2),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                SizedBox(
-                  width: 28,
-                  child: Text(
-                    _weekdayJp[i],
-                    style: const TextStyle(fontWeight: FontWeight.bold),
-                  ),
+                IconButton(
+                  icon: const Icon(Icons.remove_circle_outline),
+                  tooltip: '1回減らす',
+                  onPressed: _visitCount > 0
+                      ? () async {
+                          final newCount = await VisitService.decrementVisit(
+                            widget.store.name,
+                          );
+                          if (!mounted) return;
+                          setState(() => _visitCount = newCount);
+                        }
+                      : null,
                 ),
-                const SizedBox(width: 8),
-                Expanded(child: Text(display)),
+                Text('$_visitCount 回目', style: const TextStyle(fontSize: 16)),
+                IconButton(
+                  icon: const Icon(Icons.add_circle_outline),
+                  tooltip: '1回追加',
+                  onPressed: () async {
+                    final newCount = await VisitService.incrementVisit(
+                      widget.store.name,
+                    );
+                    if (!mounted) return;
+                    setState(() => _visitCount = newCount);
+                  },
+                ),
               ],
             ),
           );

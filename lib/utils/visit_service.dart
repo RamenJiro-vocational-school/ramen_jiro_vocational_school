@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class VisitService {
   static const String _key = 'visit_counts';
   static SharedPreferences? _prefs;
+  static const String _keyPrefix = 'visit_count_';
 
   static Future<void> _init() async {
     _prefs ??= await SharedPreferences.getInstance();
@@ -31,5 +32,14 @@ class VisitService {
   static Future<int> getVisitCount(String storeName) async {
     final counts = await loadVisitCounts();
     return counts[storeName] ?? 0;
+  }
+
+  static Future<int> decrementVisit(String storeName) async {
+    await _init();
+    final key = _keyPrefix + storeName;
+    int count = _prefs!.getInt(key) ?? 0;
+    count = (count > 0) ? count - 1 : 0;
+    await _prefs!.setInt(key, count);
+    return count;
   }
 }
