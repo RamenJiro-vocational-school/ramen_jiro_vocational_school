@@ -5,6 +5,7 @@ import 'package:latlong2/latlong.dart';
 
 import '../models/jiro_store.dart';
 import '../utils/favorites_service.dart';
+import '../utils/visit_service.dart';
 
 class StoreDetailPage extends StatefulWidget {
   const StoreDetailPage({super.key, required this.store});
@@ -20,10 +21,19 @@ class _StoreDetailPageState extends State<StoreDetailPage> {
   bool _isFav = false;
   bool _loadingFav = true;
 
+  int _visitCount = 0;
+
   @override
   void initState() {
     super.initState();
     _loadFavorite();
+    _loadVisitCount();
+  }
+
+  Future<void> _loadVisitCount() async {
+    final count = await VisitService.getVisitCount(widget.store.name);
+    if (!mounted) return;
+    setState(() => _visitCount = count);
   }
 
   Future<void> _loadFavorite() async {
@@ -33,6 +43,16 @@ class _StoreDetailPageState extends State<StoreDetailPage> {
       _isFav = isFav;
       _loadingFav = false;
     });
+  }
+
+  Future<void> _handleVisit() async {
+    final count = await VisitService.incrementVisit(widget.store.name);
+    if (!mounted) return;
+    setState(() => _visitCount = count);
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('🏁 ${widget.store.name} を訪問！ ($count 回目)')),
+    );
   }
 
   Future<void> _toggleFavorite() async {
@@ -93,6 +113,14 @@ class _StoreDetailPageState extends State<StoreDetailPage> {
               ),
               const SizedBox(width: 8),
               Expanded(child: Text(display)),
+
+              const SizedBox(height: 20),
+
+              ElevatedButton.icon(
+                onPressed: _handleVisit,
+                icon: const Icon(Icons.check_circle_outline),
+                label: Text('訪問済にする（$_visitCount 回目）'),
+              ),
             ],
           ),
         );
