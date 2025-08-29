@@ -38,6 +38,7 @@ class _RootTabsState extends State<RootTabs> {
   final _pages = const [
     HomePage(), // 本日の営業状況
     StoreListPage(), // 県別一覧＋検索
+    StampRallyPage(), //スタンプラリー画面
   ];
 
   @override
@@ -50,6 +51,10 @@ class _RootTabsState extends State<RootTabs> {
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'ホーム'),
           BottomNavigationBarItem(icon: Icon(Icons.list_alt), label: '店舗一覧'),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.emoji_events),
+            label: 'スタンプラリー',
+          ),
         ],
       ),
     );

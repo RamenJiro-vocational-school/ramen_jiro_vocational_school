@@ -72,7 +72,40 @@ class _StampRallyPageState extends State<StampRallyPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('スタンプラリー')),
+      appBar: AppBar(
+        title: const Text('スタンプラリー'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            tooltip: 'スタンプをリセット',
+            onPressed: () async {
+              final confirmed = await showDialog<bool>(
+                context: context,
+                builder: (context) => AlertDialog(
+                  title: const Text('リセット確認'),
+                  content: const Text('すべてのスタンプをリセットしますか？'),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.of(context).pop(false),
+                      child: const Text('キャンセル'),
+                    ),
+                    TextButton(
+                      onPressed: () => Navigator.of(context).pop(true),
+                      child: const Text('OK'),
+                    ),
+                  ],
+                ),
+              );
+
+              if (confirmed == true) {
+                await VisitService.resetAllVisits();
+                await _loadStores(); // ← 状態を再取得して更新
+              }
+            },
+          ),
+        ],
+      ),
+
       body: Padding(
         padding: const EdgeInsets.all(12),
         child: Column(
