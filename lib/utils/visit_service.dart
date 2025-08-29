@@ -45,4 +45,14 @@ class VisitService {
     final key = _keyPrefix + storeName;
     return _prefs!.getInt(key) ?? 0;
   }
+
+  static Future<void> resetAllVisits() async {
+    await _init();
+    final keys = _prefs!.getKeys();
+    for (final key in keys) {
+      if (key.startsWith(_keyPrefix)) {
+        await _prefs!.remove(key);
+      }
+    }
+  }
 }

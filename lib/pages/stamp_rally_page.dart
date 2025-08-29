@@ -28,10 +28,38 @@ class _StampRallyPageState extends State<StampRallyPage> {
     setState(() {
       _stores = stores;
       _visitCounts = counts;
+      _checkCompletion();
     });
   }
 
+  void _checkCompletion() {
+    final visitedCount = _visitCounts.values.where((v) => v > 0).length;
+    final total = _stores.length;
+
+    setState(() {
+      _visitedTotal = visitedCount;
+    });
+
+    if (visitedCount == total) {
+      showDialog(
+        context: context,
+        builder: (_) => AlertDialog(
+          title: const Text('🎉 スタンプラリー制覇！'),
+          content: const Text('全店舗を訪問しました！おめでとうございます！'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('閉じる'),
+            ),
+          ],
+        ),
+      );
+    }
+  }
+
   Map<String, int> _visitCounts = {};
+
+  int _visitedTotal = 0;
 
   @override
   void initState() {
@@ -47,52 +75,76 @@ class _StampRallyPageState extends State<StampRallyPage> {
       appBar: AppBar(title: const Text('スタンプラリー')),
       body: Padding(
         padding: const EdgeInsets.all(12),
-        child: GridView.builder(
-          itemCount: _stores.length,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 4,
-            mainAxisSpacing: 12,
-            crossAxisSpacing: 12,
-          ),
-          itemBuilder: (context, index) {
-            final store = _stores[index];
-            final count = _visitCounts[store.name] ?? 0;
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              '達成状況：$_visitedTotal / ${_stores.length}',
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 12),
+            Expanded(
+              child: GridView.builder(
+                itemCount: _stores.length,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 4,
+                  mainAxisSpacing: 12,
+                  crossAxisSpacing: 12,
+                ),
+                itemBuilder: (context, index) {
+                  final store = _stores[index];
+                  final count = _visitCounts[store.name] ?? 0;
+                  final isVisited = count > 0;
 
-            return Container(
-              decoration: BoxDecoration(
-                color: Colors.yellow.shade200,
-                borderRadius: BorderRadius.circular(8),
-              ),
-              alignment: Alignment.center,
-              child: Stack(
-                children: [
-                  Center(
-                    child: Text(
-                      store.name,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  if (count > 0)
-                    Positioned(
-                      right: 4,
-                      top: 4,
-                      child: CircleAvatar(
-                        radius: 12,
-                        backgroundColor: Colors.red,
-                        child: Text(
-                          '$count',
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 12,
-                          ),
-                        ),
+                  return Container(
+                    decoration: BoxDecoration(
+                      color: isVisited
+                          ? Colors.red.shade100
+                          : Colors.yellow.shade200,
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(
+                        color: isVisited ? Colors.red : Colors.grey.shade400,
+                        width: 2,
                       ),
                     ),
-                ],
+                    alignment: Alignment.center,
+                    child: Stack(
+                      children: [
+                        Center(
+                          child: Text(
+                            store.name,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: isVisited
+                                  ? Colors.red.shade900
+                                  : Colors.black87,
+                            ),
+                          ),
+                        ),
+                        if (count > 0)
+                          Positioned(
+                            right: 4,
+                            top: 4,
+                            child: CircleAvatar(
+                              radius: 12,
+                              backgroundColor: Colors.red,
+                              child: Text(
+                                '$count',
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ),
+                          ),
+                      ],
+                    ),
+                  );
+                },
               ),
-            );
-          },
+            ),
+          ],
         ),
       ),
     );
