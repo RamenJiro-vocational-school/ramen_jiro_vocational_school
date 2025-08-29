@@ -19,21 +19,17 @@ class VisitService {
     return map.map((key, value) => MapEntry(key, value as int));
   }
 
-  /// 指定店舗の訪問回数をインクリメント（+1）
+  // 訪問回数+1
   static Future<int> incrementVisit(String storeName) async {
-    final counts = await loadVisitCounts();
-    final current = counts[storeName] ?? 0;
-    counts[storeName] = current + 1;
-    await _prefs!.setString(_key, json.encode(counts));
-    return counts[storeName]!;
+    await _init();
+    final key = _keyPrefix + storeName;
+    int count = _prefs!.getInt(key) ?? 0;
+    count++;
+    await _prefs!.setInt(key, count);
+    return count;
   }
 
-  /// 訪問回数を取得
-  static Future<int> getVisitCount(String storeName) async {
-    final counts = await loadVisitCounts();
-    return counts[storeName] ?? 0;
-  }
-
+  // 訪問回数-1
   static Future<int> decrementVisit(String storeName) async {
     await _init();
     final key = _keyPrefix + storeName;
@@ -41,5 +37,12 @@ class VisitService {
     count = (count > 0) ? count - 1 : 0;
     await _prefs!.setInt(key, count);
     return count;
+  }
+
+  /// 訪問回数を取得
+  static Future<int> getVisitCount(String storeName) async {
+    await _init();
+    final key = _keyPrefix + storeName;
+    return _prefs!.getInt(key) ?? 0;
   }
 }
