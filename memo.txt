@@ -103,3 +103,5 @@ git remote add origin <URL>    # GitHubリポジトリとの接続設定（初�
 git add .
 git commit -m "訪問済ボタン作成中"
 git push origin main
+
+flutter run -d chrome
