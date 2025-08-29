@@ -95,36 +95,39 @@ class _StoreDetailPageState extends State<StoreDetailPage> {
     final store = widget.store;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: List.generate(7, (i) {
-        final weekday = i + 1; // 1..7
-        // モデルに hoursOf(weekday) がある前提。無い場合は business_hours マップを直接読むように変更してね。
-        final hours = store.hoursOf(weekday);
-        final display = (hours.isEmpty) ? '休' : hours;
-        return Padding(
-          padding: const EdgeInsets.symmetric(vertical: 2),
-          child: Row(
-            children: [
-              SizedBox(
-                width: 28,
-                child: Text(
-                  _weekdayJp[i],
-                  style: const TextStyle(fontWeight: FontWeight.bold),
+      children: [
+        // 7日分の営業時間テーブル
+        ...List.generate(7, (i) {
+          final weekday = i + 1;
+          final hours = store.hoursOf(weekday);
+          final display = (hours.isEmpty) ? '休' : hours;
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 2),
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 28,
+                  child: Text(
+                    _weekdayJp[i],
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
                 ),
-              ),
-              const SizedBox(width: 8),
-              Expanded(child: Text(display)),
+                const SizedBox(width: 8),
+                Expanded(child: Text(display)),
+              ],
+            ),
+          );
+        }),
 
-              const SizedBox(height: 20),
+        const SizedBox(height: 20),
 
-              ElevatedButton.icon(
-                onPressed: _handleVisit,
-                icon: const Icon(Icons.check_circle_outline),
-                label: Text('訪問済にする（$_visitCount 回目）'),
-              ),
-            ],
-          ),
-        );
-      }),
+        // 👇ここが今回のボタン（曜日ループの外に出した）
+        ElevatedButton.icon(
+          onPressed: _handleVisit,
+          icon: const Icon(Icons.check_circle_outline),
+          label: Text('訪問済にする（$_visitCount 回目）'),
+        ),
+      ],
     );
   }
 
