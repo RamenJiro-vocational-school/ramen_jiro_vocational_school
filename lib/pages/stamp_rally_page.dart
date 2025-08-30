@@ -137,11 +137,11 @@ class _StampRallyPageState extends State<StampRallyPage> {
                   return Container(
                     decoration: BoxDecoration(
                       color: isVisited
-                          ? Colors.red.shade100
+                          ? const Color.fromARGB(255, 242, 255, 0)
                           : Colors.yellow.shade200,
                       borderRadius: BorderRadius.circular(4),
                       border: Border.all(
-                        color: isVisited ? const Color.fromARGB(255, 251, 255, 0) : Colors.grey.shade400,
+                        color: isVisited ? const Color.fromARGB(205, 0, 0, 0) : Colors.grey.shade400,
                         width: 1,
                       ),
                     ),
@@ -165,7 +165,7 @@ class _StampRallyPageState extends State<StampRallyPage> {
                             right: 4,
                             top: 4,
                             child: CircleAvatar(
-                              radius: 12,
+                              radius: 8,
                               backgroundColor: Colors.red,
                               child: Text(
                                 '$count',
