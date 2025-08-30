@@ -3,6 +3,8 @@ import '../models/jiro_store.dart';
 import '../utils/visit_service.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:confetti/confetti.dart';
+
 
 class StampRallyPage extends StatefulWidget {
   const StampRallyPage({super.key});
@@ -12,6 +14,8 @@ class StampRallyPage extends StatefulWidget {
 }
 
 class _StampRallyPageState extends State<StampRallyPage> {
+  late ConfettiController _confettiController;
+
   List<JiroStore> _stores = [];
   Future<void> _loadStores() async {
     final data = await rootBundle.loadString('assets/json/jiro_stores.json');
@@ -41,6 +45,8 @@ class _StampRallyPageState extends State<StampRallyPage> {
     });
 
     if (visitedCount == total) {
+      _confettiController.play();
+
       showDialog(
         context: context,
         builder: (_) => AlertDialog(
@@ -57,17 +63,24 @@ class _StampRallyPageState extends State<StampRallyPage> {
     }
   }
 
+  @override
+void initState() {
+  super.initState();
+  _confettiController = ConfettiController(duration: const Duration(seconds: 3));
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    _loadStores();
+  });
+}
+
+@override
+void dispose() {
+  _confettiController.dispose();
+  super.dispose();
+}
+
   Map<String, int> _visitCounts = {};
 
   int _visitedTotal = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _loadStores();
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -110,81 +123,104 @@ class _StampRallyPageState extends State<StampRallyPage> {
         ],
       ),
 
-      body: Padding(
-        padding: const EdgeInsets.all(4),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              '${_stores.length} 店舗中 $_visitedTotal 店舗訪問済み',
-              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 12),
-            Expanded(
-              child: GridView.builder(
-                itemCount: _stores.length,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 6,
-                  mainAxisSpacing: 6,
-                  crossAxisSpacing: 6,
-                  childAspectRatio: 1.4, // ← 高さ・幅の比率
-                ),
-                itemBuilder: (context, index) {
-                  final store = _stores[index];
-                  final count = _visitCounts[store.name] ?? 0;
-                  final isVisited = count > 0;
+      body: Stack(
+  children: [
+    Padding(
+      padding: const EdgeInsets.all(4),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            '${_stores.length} 店舗中 $_visitedTotal 店舗訪問済み',
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 12),
+          Expanded(
+            child: GridView.builder(
+              itemCount: _stores.length,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 6,
+                mainAxisSpacing: 6,
+                crossAxisSpacing: 6,
+                childAspectRatio: 1.4,
+              ),
+              itemBuilder: (context, index) {
+                final store = _stores[index];
+                final count = _visitCounts[store.name] ?? 0;
+                final isVisited = count > 0;
 
-                  return Container(
-                    decoration: BoxDecoration(
+                return Container(
+                  decoration: BoxDecoration(
+                    color: isVisited
+                        ? const Color.fromARGB(255, 242, 255, 0)
+                        : Colors.yellow.shade200,
+                    borderRadius: BorderRadius.circular(4),
+                    border: Border.all(
                       color: isVisited
-                          ? const Color.fromARGB(255, 242, 255, 0)
-                          : Colors.yellow.shade200,
-                      borderRadius: BorderRadius.circular(4),
-                      border: Border.all(
-                        color: isVisited ? const Color.fromARGB(205, 0, 0, 0) : Colors.grey.shade400,
-                        width: 1,
-                      ),
+                          ? const Color.fromARGB(205, 0, 0, 0)
+                          : Colors.grey.shade400,
+                      width: 1,
                     ),
-                    alignment: Alignment.center,
-                    child: Stack(
-                      children: [
-                        Center(
-                          child: Text(
-                            store.name,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: isVisited
-                                  ? const Color.fromARGB(255, 0, 0, 0)
-                                  : Colors.black87,
-                            ),
+                  ),
+                  alignment: Alignment.center,
+                  child: Stack(
+                    children: [
+                      Center(
+                        child: Text(
+                          store.name,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: isVisited
+                                ? const Color.fromARGB(255, 0, 0, 0)
+                                : Colors.black87,
                           ),
                         ),
-                        if (count > 0)
-                          Positioned(
-                            right: 4,
-                            top: 4,
-                            child: CircleAvatar(
-                              radius: 8,
-                              backgroundColor: Colors.red,
-                              child: Text(
-                                '$count',
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 8,
-                                ),
+                      ),
+                      if (count > 0)
+                        Positioned(
+                          right: 4,
+                          top: 4,
+                          child: CircleAvatar(
+                            radius: 8,
+                            backgroundColor: Colors.red,
+                            child: Text(
+                              '$count',
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 8,
                               ),
                             ),
                           ),
-                      ],
-                    ),
-                  );
-                },
-              ),
+                        ),
+                    ],
+                  ),
+                );
+              },
             ),
-          ],
-        ),
+          ),
+        ],
       ),
+    ),
+
+    // 🎉 ← これが紙吹雪！！
+    Align(
+      alignment: Alignment.topCenter,
+      child: ConfettiWidget(
+        confettiController: _confettiController,
+        blastDirectionality: BlastDirectionality.explosive,
+        shouldLoop: false,
+        colors: const [
+          Colors.red,
+          Colors.blue,
+          Colors.green,
+          Colors.orange,
+          Colors.purple,
+        ],
+      ),
+    ),
+  ],
+),
     );
   }
 }
