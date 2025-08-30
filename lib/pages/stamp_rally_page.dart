@@ -50,7 +50,7 @@ class _StampRallyPageState extends State<StampRallyPage> {
       showDialog(
         context: context,
         builder: (_) => AlertDialog(
-          title: const Text('🎉 スタンプラリー制覇！'),
+          title: const Text('🎉 スタンプラリー制覇 🎉'),
           content: const Text('全店舗を訪問しました！おめでとうございます！'),
           actions: [
             TextButton(
@@ -153,7 +153,7 @@ void dispose() {
                   decoration: BoxDecoration(
                     color: isVisited
                         ? const Color.fromARGB(255, 242, 255, 0)
-                        : Colors.yellow.shade200,
+                        : const Color.fromARGB(255, 253, 246, 184),
                     borderRadius: BorderRadius.circular(4),
                     border: Border.all(
                       color: isVisited
@@ -203,19 +203,18 @@ void dispose() {
       ),
     ),
 
-    // 🎉 ← これが紙吹雪！！
+    // 以下紙吹雪！！
     Align(
       alignment: Alignment.topCenter,
       child: ConfettiWidget(
         confettiController: _confettiController,
         blastDirectionality: BlastDirectionality.explosive,
         shouldLoop: false,
+        emissionFrequency: 0.1,
+        numberOfParticles: 10,
         colors: const [
-          Colors.red,
-          Colors.blue,
-          Colors.green,
-          Colors.orange,
-          Colors.purple,
+          Colors.black,
+          Colors.yellow,
         ],
       ),
     ),
