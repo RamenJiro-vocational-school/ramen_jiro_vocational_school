@@ -141,7 +141,7 @@ class _StampRallyPageState extends State<StampRallyPage> {
                           : Colors.yellow.shade200,
                       borderRadius: BorderRadius.circular(4),
                       border: Border.all(
-                        color: isVisited ? Colors.red : Colors.grey.shade400,
+                        color: isVisited ? const Color.fromARGB(255, 251, 255, 0) : Colors.grey.shade400,
                         width: 1,
                       ),
                     ),
@@ -155,7 +155,7 @@ class _StampRallyPageState extends State<StampRallyPage> {
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: isVisited
-                                  ? Colors.red.shade900
+                                  ? const Color.fromARGB(255, 0, 0, 0)
                                   : Colors.black87,
                             ),
                           ),
@@ -171,7 +171,7 @@ class _StampRallyPageState extends State<StampRallyPage> {
                                 '$count',
                                 style: const TextStyle(
                                   color: Colors.white,
-                                  fontSize: 10,
+                                  fontSize: 8,
                                 ),
                               ),
                             ),
