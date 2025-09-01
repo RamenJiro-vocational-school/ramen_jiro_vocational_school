@@ -18,6 +18,7 @@ class _PhotoPageState extends State<PhotoPage> {
   final TextEditingController _menuController = TextEditingController();
   final TextEditingController _callController = TextEditingController();
   final TextEditingController _memoController = TextEditingController();
+  DateTime _selectedDate = DateTime.now();
 
   List<String> _storeNames = [];
   String? _selectedStore;
@@ -38,7 +39,6 @@ class _PhotoPageState extends State<PhotoPage> {
       _selectedStore = names.first;
     });
 
-    // 店舗名が決まったあとに保存データも読む
     _loadData();
   }
 
@@ -49,6 +49,20 @@ class _PhotoPageState extends State<PhotoPage> {
     if (picked != null && _images.length < 4) {
       setState(() {
         _images.add(picked);
+      });
+    }
+  }
+
+  Future<void> _pickDate() async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: _selectedDate,
+      firstDate: DateTime(2020),
+      lastDate: DateTime.now(),
+    );
+    if (picked != null && picked != _selectedDate) {
+      setState(() {
+        _selectedDate = picked;
       });
     }
   }
@@ -66,6 +80,7 @@ class _PhotoPageState extends State<PhotoPage> {
       'menu': _menuController.text,
       'call': _callController.text,
       'memo': _memoController.text,
+      'date': _selectedDate.toIso8601String(),
     };
 
     await prefs.setString(key, jsonEncode(record));
@@ -94,12 +109,14 @@ class _PhotoPageState extends State<PhotoPage> {
       _menuController.text = data['menu'] ?? '';
       _callController.text = data['call'] ?? '';
       _memoController.text = data['memo'] ?? '';
+      if (data['date'] != null) {
+        _selectedDate = DateTime.tryParse(data['date']) ?? DateTime.now();
+      }
     });
   }
 
   String _generateKey(String suffix) {
-    final now = DateTime.now();
-    final dateString = '${now.year}-${now.month}-${now.day}';
+    final dateString = '${_selectedDate.year}-${_selectedDate.month}-${_selectedDate.day}';
     return 'jiro_${dateString}_${_selectedStore}_$suffix';
   }
 
@@ -135,7 +152,6 @@ class _PhotoPageState extends State<PhotoPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // 店舗選択
             const Text('🏪 店舗名', style: TextStyle(fontWeight: FontWeight.bold)),
             const SizedBox(height: 6),
             DropdownButton<String>(
@@ -144,7 +160,7 @@ class _PhotoPageState extends State<PhotoPage> {
               onChanged: (value) {
                 setState(() {
                   _selectedStore = value;
-                  _loadData(); // 店舗を切り替えたら、その店舗のデータ読み直す
+                  _loadData();
                 });
               },
               items: _storeNames.map((name) {
@@ -156,11 +172,27 @@ class _PhotoPageState extends State<PhotoPage> {
             ),
             const SizedBox(height: 16),
 
-            // 📸 写真追加ボタン
+            const Text('📅 訪問日', style: TextStyle(fontWeight: FontWeight.bold)),
+            const SizedBox(height: 6),
+            InkWell(
+              onTap: _pickDate,
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey),
+                  borderRadius: BorderRadius.circular(4),
+                ),
+                child: Text(
+                  '${_selectedDate.year}/${_selectedDate.month}/${_selectedDate.day}',
+                  style: const TextStyle(fontSize: 16),
+                ),
+              ),
+            ),
+            const SizedBox(height: 16),
+
             ElevatedButton(onPressed: _pickImage, child: const Text('写真を追加')),
             const SizedBox(height: 12),
 
-            // 📷 選択済み画像たち（タップで削除）
             Wrap(
               spacing: 8,
               runSpacing: 8,
@@ -205,7 +237,6 @@ class _PhotoPageState extends State<PhotoPage> {
             ),
             const SizedBox(height: 24),
 
-            // 🍜 メニュー入力
             const Text('🍜 食べたメニュー', style: TextStyle(fontWeight: FontWeight.bold)),
             const SizedBox(height: 6),
             TextField(
@@ -217,7 +248,6 @@ class _PhotoPageState extends State<PhotoPage> {
             ),
             const SizedBox(height: 24),
 
-            // 🔊 コール入力
             const Text('🔊 コール', style: TextStyle(fontWeight: FontWeight.bold)),
             const SizedBox(height: 6),
             TextField(
@@ -229,7 +259,6 @@ class _PhotoPageState extends State<PhotoPage> {
             ),
             const SizedBox(height: 24),
 
-            // 📝 メモ
             const Text('📝 メモ', style: TextStyle(fontWeight: FontWeight.bold)),
             const SizedBox(height: 6),
             TextField(

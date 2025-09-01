@@ -1,6 +1,8 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:convert';
 
 class RecordListPage extends StatefulWidget {
   const RecordListPage({super.key});
@@ -10,43 +12,40 @@ class RecordListPage extends StatefulWidget {
 }
 
 class _RecordListPageState extends State<RecordListPage> {
-  List<Map<String, dynamic>> _records = [];
+  List<MapEntry<String, dynamic>> _records = [];
 
   @override
   void initState() {
     super.initState();
-    _loadAllRecords();
+    _loadRecords();
   }
 
-  Future<void> _loadAllRecords() async {
+  Future<void> _loadRecords() async {
     final prefs = await SharedPreferences.getInstance();
-    final keys = prefs.getKeys();
+    final allKeys = prefs.getKeys();
 
-    final records = <Map<String, dynamic>>[];
+    final recordKeys = allKeys.where((k) => k.contains('_record')).toList();
 
-    for (final key in keys) {
-      if (key.startsWith('jiro_') && key.endsWith('_record')) {
-        final jsonStr = prefs.getString(key);
-        if (jsonStr != null) {
-          final data = jsonDecode(jsonStr);
-          records.add({
-            'key': key,
-            'store': key.split('_')[2],
-            'date': key.split('_')[1],
-            'menu': data['menu'] ?? '',
-            'call': data['call'] ?? '',
-            'memo': data['memo'] ?? '',
-          });
-        }
-      }
+    final loaded = <MapEntry<String, dynamic>>[];
+    for (final key in recordKeys) {
+      final jsonString = prefs.getString(key);
+      if (jsonString == null) continue;
+
+      final data = jsonDecode(jsonString);
+      loaded.add(MapEntry(key, data));
     }
 
-    // 最新日付順に並べ替え
-    records.sort((a, b) => b['date'].compareTo(a['date']));
+    loaded.sort((a, b) => b.key.compareTo(a.key)); // 新しい順
 
     setState(() {
-      _records = records;
+      _records = loaded;
     });
+  }
+
+  Future<void> _deleteRecord(String key) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove(key);
+    _loadRecords(); // 再読み込み
   }
 
   @override
@@ -54,38 +53,64 @@ class _RecordListPageState extends State<RecordListPage> {
     return Scaffold(
       appBar: AppBar(title: const Text('記録一覧')),
       body: _records.isEmpty
-          ? const Center(child: Text('記録が見つかりません'))
+          ? const Center(child: Text('記録がありません'))
           : ListView.separated(
+              padding: const EdgeInsets.all(12),
               itemCount: _records.length,
               separatorBuilder: (_, __) => const Divider(height: 0),
-              itemBuilder: (context, index) {
-                final record = _records[index];
+              itemBuilder: (context, i) {
+                final entry = _records[i];
+                final key = entry.key;
+                final data = entry.value;
+                final date = data['date'] ?? '';
+                final store = key.split('_')[2]; // 例: jiro_2024-09-02_三田本店_record
+                final menu = data['menu'] ?? '';
+                final photoPath = (data['photos'] as List?)?.first;
+
                 return ListTile(
-                  title: Text('${record['date']}｜${record['store']}'),
-                  subtitle: Text('🍜 ${record['menu']} / 🔊 ${record['call']}'),
-                  onTap: () {
-                    showDialog(
-                      context: context,
-                      builder: (_) => AlertDialog(
-                        title: Text('${record['store']}（${record['date']}）'),
-                        content: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('🍜 メニュー: ${record['menu']}'),
-                            Text('🔊 コール: ${record['call']}'),
-                            Text('📝 メモ:\n${record['memo']}'),
+                  contentPadding: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
+                  leading: photoPath != null && File(photoPath).existsSync()
+                      ? Image.file(
+                          File(photoPath),
+                          width: 56,
+                          height: 56,
+                          fit: BoxFit.cover,
+                        )
+                      : Container(
+                          width: 56,
+                          height: 56,
+                          color: Colors.grey.shade300,
+                          child: const Icon(Icons.ramen_dining, color: Colors.black45),
+                        ),
+                  title: Text(store),
+                  subtitle: Text('$date\n$menu'),
+                  isThreeLine: true,
+                  trailing: IconButton(
+                    icon: const Icon(Icons.delete, color: Colors.red),
+                    tooltip: '削除',
+                    onPressed: () async {
+                      final confirmed = await showDialog<bool>(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          title: const Text('削除確認'),
+                          content: const Text('この記録を削除しますか？'),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.pop(context, false),
+                              child: const Text('キャンセル'),
+                            ),
+                            TextButton(
+                              onPressed: () => Navigator.pop(context, true),
+                              child: const Text('削除する'),
+                            ),
                           ],
                         ),
-                        actions: [
-                          TextButton(
-                            onPressed: () => Navigator.pop(context),
-                            child: const Text('閉じる'),
-                          )
-                        ],
-                      ),
-                    );
-                  },
+                      );
+                      if (confirmed == true) {
+                        await _deleteRecord(key);
+                      }
+                    },
+                  ),
                 );
               },
             ),
