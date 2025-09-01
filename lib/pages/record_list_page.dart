@@ -149,6 +149,30 @@ class _RecordListPageState extends State<RecordListPage> {
                       }
                     },
                   ),
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: Text(data['store'] ?? '店舗不明'),
+                        content: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('📅 日時: ${data['date'] ?? '不明'}'),
+                            Text('🍜 メニュー: ${data['menu'] ?? '不明'}'),
+                            Text('🔊 コール: ${data['call'] ?? '不明'}'),
+                            Text('📝 メモ: ${data['memo'] ?? ''}'),
+                          ],
+                        ),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.pop(context),
+                            child: const Text('閉じる'),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
                 );
               },
             ),

@@ -77,6 +77,7 @@ class _PhotoPageState extends State<PhotoPage> {
     final imagePaths = _images.map((x) => x.path).toList();
 
     final record = {
+      'store': _selectedStore,
       'photos': imagePaths,
       'menu': _menuController.text,
       'call': _callController.text,
