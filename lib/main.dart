@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'pages/home_page.dart';
 import 'pages/store_list.dart';
 import 'pages/stamp_rally_page.dart';
+import 'pages/photo_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,6 +40,7 @@ class _RootTabsState extends State<RootTabs> {
     HomePage(), // 本日の営業状況
     StoreListPage(), // 県別一覧＋検索
     StampRallyPage(), //スタンプラリー画面
+    PhotoPage(storeName: '三田本店'), // ← 仮で固定
   ];
 
   @override
@@ -53,8 +55,11 @@ class _RootTabsState extends State<RootTabs> {
           BottomNavigationBarItem(icon: Icon(Icons.list_alt), label: '店舗一覧'),
           BottomNavigationBarItem(
             icon: Icon(Icons.emoji_events),
-            label: 'スタンプラリー',
-          ),
+            label: 'スタンプラリー'),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.ramen_dining),
+              label: 'ラーメン記録',
+            ),
         ],
       ),
     );

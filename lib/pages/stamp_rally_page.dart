@@ -5,7 +5,6 @@ import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:confetti/confetti.dart';
 
-
 class StampRallyPage extends StatefulWidget {
   const StampRallyPage({super.key});
 
@@ -64,19 +63,21 @@ class _StampRallyPageState extends State<StampRallyPage> {
   }
 
   @override
-void initState() {
-  super.initState();
-  _confettiController = ConfettiController(duration: const Duration(seconds: 3));
-  WidgetsBinding.instance.addPostFrameCallback((_) {
-    _loadStores();
-  });
-}
+  void initState() {
+    super.initState();
+    _confettiController = ConfettiController(
+      duration: const Duration(seconds: 3),
+    );
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _loadStores();
+    });
+  }
 
-@override
-void dispose() {
-  _confettiController.dispose();
-  super.dispose();
-}
+  @override
+  void dispose() {
+    _confettiController.dispose();
+    super.dispose();
+  }
 
   Map<String, int> _visitCounts = {};
 
@@ -124,102 +125,103 @@ void dispose() {
       ),
 
       body: Stack(
-  children: [
-    Padding(
-      padding: const EdgeInsets.all(4),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            '${_stores.length} 店舗中 $_visitedTotal 店舗訪問済み',
-            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 12),
-          Expanded(
-            child: GridView.builder(
-              itemCount: _stores.length,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 6,
-                mainAxisSpacing: 6,
-                crossAxisSpacing: 6,
-                childAspectRatio: 1.4,
-              ),
-              itemBuilder: (context, index) {
-                final store = _stores[index];
-                final count = _visitCounts[store.name] ?? 0;
-                final isVisited = count > 0;
-
-                return Container(
-                  decoration: BoxDecoration(
-                    color: isVisited
-                        ? const Color.fromARGB(255, 242, 255, 0)
-                        : const Color.fromARGB(255, 253, 246, 184),
-                    borderRadius: BorderRadius.circular(4),
-                    border: Border.all(
-                      color: isVisited
-                          ? const Color.fromARGB(205, 0, 0, 0)
-                          : Colors.grey.shade400,
-                      width: 1,
-                    ),
+          Padding(
+            padding: const EdgeInsets.all(4),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '${_stores.length} 店舗中 $_visitedTotal 店舗訪問済み',
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
                   ),
-                  alignment: Alignment.center,
-                  child: Stack(
-                    children: [
-                      Center(
-                        child: Text(
-                          store.name,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
+                ),
+                const SizedBox(height: 12),
+                Expanded(
+                  child: GridView.builder(
+                    itemCount: _stores.length,
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 6,
+                          mainAxisSpacing: 6,
+                          crossAxisSpacing: 6,
+                          childAspectRatio: 1.4,
+                        ),
+                    itemBuilder: (context, index) {
+                      final store = _stores[index];
+                      final count = _visitCounts[store.name] ?? 0;
+                      final isVisited = count > 0;
+
+                      return Container(
+                        decoration: BoxDecoration(
+                          color: isVisited
+                              ? const Color.fromARGB(255, 242, 255, 0)
+                              : const Color.fromARGB(255, 253, 246, 184),
+                          borderRadius: BorderRadius.circular(4),
+                          border: Border.all(
                             color: isVisited
-                                ? const Color.fromARGB(255, 0, 0, 0)
-                                : Colors.black87,
+                                ? const Color.fromARGB(205, 0, 0, 0)
+                                : Colors.grey.shade400,
+                            width: 1,
                           ),
                         ),
-                      ),
-                      if (count > 0)
-                        Positioned(
-                          right: 4,
-                          top: 4,
-                          child: CircleAvatar(
-                            radius: 8,
-                            backgroundColor: Colors.red,
-                            child: Text(
-                              '$count',
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 8,
+                        alignment: Alignment.center,
+                        child: Stack(
+                          children: [
+                            Center(
+                              child: Text(
+                                store.name,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: isVisited
+                                      ? const Color.fromARGB(255, 0, 0, 0)
+                                      : Colors.black87,
+                                ),
                               ),
                             ),
-                          ),
+                            if (count > 0)
+                              Positioned(
+                                right: 4,
+                                top: 4,
+                                child: CircleAvatar(
+                                  radius: 8,
+                                  backgroundColor: Colors.red,
+                                  child: Text(
+                                    '$count',
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 8,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                          ],
                         ),
-                    ],
+                      );
+                    },
                   ),
-                );
-              },
+                ),
+              ],
+            ),
+          ),
+
+          // 以下紙吹雪！！
+          Align(
+            alignment: Alignment.topCenter,
+            child: ConfettiWidget(
+              confettiController: _confettiController,
+              blastDirectionality: BlastDirectionality.explosive,
+              shouldLoop: false,
+              emissionFrequency: 0.1,
+              numberOfParticles: 10,
+              colors: const [Colors.black, Colors.yellow],
             ),
           ),
         ],
       ),
-    ),
-
-    // 以下紙吹雪！！
-    Align(
-      alignment: Alignment.topCenter,
-      child: ConfettiWidget(
-        confettiController: _confettiController,
-        blastDirectionality: BlastDirectionality.explosive,
-        shouldLoop: false,
-        emissionFrequency: 0.1,
-        numberOfParticles: 10,
-        colors: const [
-          Colors.black,
-          Colors.yellow,
-        ],
-      ),
-    ),
-  ],
-),
     );
   }
 }
