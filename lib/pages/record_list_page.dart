@@ -181,7 +181,7 @@ class _RecordListPageState extends State<RecordListPage> {
                               ),
                             const SizedBox(height: 12),
                             Row(
-                              children: [const Text('📅 '), Text('日時: $date')],
+                              children: [const Text('📅 '), Text('日付: $date')],
                             ),
                             Row(
                               children: [
