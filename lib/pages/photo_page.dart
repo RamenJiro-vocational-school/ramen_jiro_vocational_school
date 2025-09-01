@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
 
 class PhotoPage extends StatefulWidget {
   const PhotoPage({super.key});
@@ -8,48 +10,63 @@ class PhotoPage extends StatefulWidget {
 }
 
 class _PhotoPageState extends State<PhotoPage> {
-  final List<Image> _images = [];
+  final List<XFile> _images = [];
+
   final TextEditingController _menuController = TextEditingController();
   final TextEditingController _callController = TextEditingController();
   final TextEditingController _memoController = TextEditingController();
 
+  Future<void> _pickImage() async {
+    final picker = ImagePicker();
+    final picked = await picker.pickImage(source: ImageSource.gallery);
+
+    if (picked != null && _images.length < 4) {
+      setState(() {
+        _images.add(picked);
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _menuController.dispose();
+    _callController.dispose();
+    _memoController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('訪問記録'),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: const Text('今日のラーメン')),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // 写真追加セクション
-            const Text('📷 ラーメン写真（最大4枚）', style: TextStyle(fontWeight: FontWeight.bold)),
-            const SizedBox(height: 8),
+            // 📸 写真追加ボタン
+            ElevatedButton(
+              onPressed: _pickImage,
+              child: const Text('写真を追加'),
+            ),
+            const SizedBox(height: 12),
+
+            // 📷 選択済み画像たち
             Wrap(
               spacing: 8,
               runSpacing: 8,
-              children: [
-                ..._images.map((img) => SizedBox(width: 80, height: 80, child: img)),
-                if (_images.length < 4)
-                  GestureDetector(
-                    onTap: () {
-                      // 画像追加ロジック（後で実装）
-                    },
-                    child: Container(
-                      width: 80,
-                      height: 80,
-                      color: Colors.grey.shade300,
-                      child: const Icon(Icons.add_a_photo),
-                    ),
-                  ),
-              ],
+              children: _images
+                  .map((xfile) => Image.file(
+                        File(xfile.path),
+                        width: 100,
+                        height: 100,
+                        fit: BoxFit.cover,
+                      ))
+                  .toList(),
             ),
             const SizedBox(height: 24),
 
-            // メニュー入力欄
+            // 🍜 メニュー入力
             const Text('🍜 食べたメニュー', style: TextStyle(fontWeight: FontWeight.bold)),
             const SizedBox(height: 6),
             TextField(
@@ -61,7 +78,7 @@ class _PhotoPageState extends State<PhotoPage> {
             ),
             const SizedBox(height: 24),
 
-            // コール入力欄
+            // 🔊 コール入力
             const Text('🔊 コール', style: TextStyle(fontWeight: FontWeight.bold)),
             const SizedBox(height: 6),
             TextField(
@@ -73,7 +90,7 @@ class _PhotoPageState extends State<PhotoPage> {
             ),
             const SizedBox(height: 24),
 
-            // メモ欄
+            // 📝 メモ
             const Text('📝 メモ', style: TextStyle(fontWeight: FontWeight.bold)),
             const SizedBox(height: 6),
             TextField(
