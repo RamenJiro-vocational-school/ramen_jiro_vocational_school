@@ -4,6 +4,8 @@ import 'pages/home_page.dart';
 import 'pages/store_list.dart';
 import 'pages/stamp_rally_page.dart';
 import 'pages/photo_page.dart';
+import 'pages/record_list_page.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -46,7 +48,8 @@ class _RootTabsState extends State<RootTabs> {
     HomePage(), // 本日の営業状況
     StoreListPage(), // 県別一覧＋検索
     StampRallyPage(), //スタンプラリー画面
-    PhotoPage(storeName: '三田本店'), // ← 仮で固定
+    PhotoPage(), // ラーメン記録ページ
+    RecordListPage(),// 過去の記録閲覧ページ
   ];
 
   @override
@@ -67,6 +70,7 @@ class _RootTabsState extends State<RootTabs> {
             icon: Icon(Icons.ramen_dining),
             label: 'ラーメン記録',
           ),
+          BottomNavigationBarItem(icon: Icon(Icons.history), label: '記録一覧'),
         ],
       ),
     );
