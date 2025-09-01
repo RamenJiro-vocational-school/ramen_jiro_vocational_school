@@ -31,11 +31,15 @@ class _RecordListPageState extends State<RecordListPage> {
       final jsonString = prefs.getString(key);
       if (jsonString == null) continue;
 
-      final data = jsonDecode(jsonString);
-      loaded.add(MapEntry(key, data));
+      try {
+        final data = jsonDecode(jsonString);
+        loaded.add(MapEntry(key, data));
+      } catch (e) {
+        debugPrint('デコード失敗: $key');
+      }
     }
 
-    loaded.sort((a, b) => b.key.compareTo(a.key)); // 新しい順
+    loaded.sort((a, b) => b.key.compareTo(a.key));
 
     setState(() {
       _records = loaded;
@@ -62,8 +66,9 @@ class _RecordListPageState extends State<RecordListPage> {
                 final entry = _records[i];
                 final key = entry.key;
                 final data = entry.value;
+
                 final date = data['date'] ?? '';
-                final store = key.split('_')[2]; // 例: jiro_2024-09-02_三田本店_record
+                final store = data['store'] ?? '店舗不明';
                 final menu = data['menu'] ?? '';
                 final photoPath = (data['photos'] as List?)?.first;
 
