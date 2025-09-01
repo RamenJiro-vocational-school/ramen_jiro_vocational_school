@@ -20,7 +20,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFFFFF000)),
         useMaterial3: true,
+        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+          selectedItemColor: Colors.black,
+          unselectedItemColor: Colors.black54, // これで薄すぎない色に
+          showUnselectedLabels: true,
+        ),
       ),
+
       home: const RootTabs(),
     );
   }
@@ -55,11 +61,12 @@ class _RootTabsState extends State<RootTabs> {
           BottomNavigationBarItem(icon: Icon(Icons.list_alt), label: '店舗一覧'),
           BottomNavigationBarItem(
             icon: Icon(Icons.emoji_events),
-            label: 'スタンプラリー'),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.ramen_dining),
-              label: 'ラーメン記録',
-            ),
+            label: 'スタンプラリー',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.ramen_dining),
+            label: 'ラーメン記録',
+          ),
         ],
       ),
     );
