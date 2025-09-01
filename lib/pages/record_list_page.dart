@@ -68,7 +68,13 @@ class _RecordListPageState extends State<RecordListPage> {
                 final key = entry.key;
                 final data = entry.value;
 
-                final date = data['date'] ?? '';
+                final rawDate = data['date'];
+                final date = rawDate != null
+                    ? DateTime.tryParse(
+                            rawDate,
+                          )?.toLocal().toString().split(' ').first ??
+                          ''
+                    : '';
                 final store = data['store'] ?? '店舗不明';
                 final menu = data['menu'] ?? '';
                 final photoList = (data['photos'] as List?) ?? [];
@@ -152,16 +158,51 @@ class _RecordListPageState extends State<RecordListPage> {
                   onTap: () {
                     showDialog(
                       context: context,
-                      builder: (context) => AlertDialog(
-                        title: Text(data['store'] ?? '店舗不明'),
+                      builder: (_) => AlertDialog(
+                        title: Text(store),
                         content: Column(
                           mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('📅 日時: ${data['date'] ?? '不明'}'),
-                            Text('🍜 メニュー: ${data['menu'] ?? '不明'}'),
-                            Text('🔊 コール: ${data['call'] ?? '不明'}'),
-                            Text('📝 メモ: ${data['memo'] ?? ''}'),
+                            if (photoPath != null &&
+                                (!kIsWeb && File(photoPath).existsSync()))
+                              Image.file(
+                                File(photoPath),
+                                width: 200,
+                                height: 200,
+                                fit: BoxFit.cover,
+                              ),
+                            if (photoPath != null && kIsWeb)
+                              Image.network(
+                                photoPath,
+                                width: 200,
+                                height: 200,
+                                fit: BoxFit.cover,
+                                errorBuilder: (_, __, ___) => const SizedBox(),
+                              ),
+                            const SizedBox(height: 12),
+                            Row(
+                              children: [const Text('📅 '), Text('日時: $date')],
+                            ),
+                            Row(
+                              children: [
+                                const Text('🍜 '),
+                                Text('メニュー: $menu'),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                const Text('🔊 '),
+                                Text('コール: ${data['call'] ?? ''}'),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                const Text('📝 '),
+                                Flexible(
+                                  child: Text('メモ: ${data['memo'] ?? ''}'),
+                                ),
+                              ],
+                            ),
                           ],
                         ),
                         actions: [
