@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/foundation.dart';
 
 class RecordListPage extends StatefulWidget {
   const RecordListPage({super.key});
@@ -70,23 +71,55 @@ class _RecordListPageState extends State<RecordListPage> {
                 final date = data['date'] ?? '';
                 final store = data['store'] ?? '店舗不明';
                 final menu = data['menu'] ?? '';
-                final photoPath = (data['photos'] as List?)?.first;
+                final photoList = (data['photos'] as List?) ?? [];
+                final photoPath = photoList.isNotEmpty ? photoList.first : null;
 
                 return ListTile(
-                  contentPadding: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
-                  leading: photoPath != null && File(photoPath).existsSync()
-                      ? Image.file(
-                          File(photoPath),
-                          width: 56,
-                          height: 56,
-                          fit: BoxFit.cover,
-                        )
-                      : Container(
-                          width: 56,
-                          height: 56,
-                          color: Colors.grey.shade300,
-                          child: const Icon(Icons.ramen_dining, color: Colors.black45),
+                  contentPadding: const EdgeInsets.symmetric(
+                    vertical: 6,
+                    horizontal: 12,
+                  ),
+                  leading: Builder(
+                    builder: (context) {
+                      if (photoPath != null) {
+                        if (kIsWeb) {
+                          return Image.network(
+                            photoPath,
+                            width: 56,
+                            height: 56,
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) {
+                              return Container(
+                                width: 56,
+                                height: 56,
+                                color: Colors.grey.shade300,
+                                child: const Icon(
+                                  Icons.ramen_dining,
+                                  color: Colors.black45,
+                                ),
+                              );
+                            },
+                          );
+                        } else if (File(photoPath).existsSync()) {
+                          return Image.file(
+                            File(photoPath),
+                            width: 56,
+                            height: 56,
+                            fit: BoxFit.cover,
+                          );
+                        }
+                      }
+                      return Container(
+                        width: 56,
+                        height: 56,
+                        color: Colors.grey.shade300,
+                        child: const Icon(
+                          Icons.ramen_dining,
+                          color: Colors.black45,
                         ),
+                      );
+                    },
+                  ),
                   title: Text(store),
                   subtitle: Text('$date\n$menu'),
                   isThreeLine: true,

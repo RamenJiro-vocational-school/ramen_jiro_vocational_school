@@ -4,6 +4,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'dart:convert';
+import 'package:flutter/foundation.dart'; // Webかどうか判定するやつ
 
 class PhotoPage extends StatefulWidget {
   const PhotoPage({super.key});
@@ -86,9 +87,9 @@ class _PhotoPageState extends State<PhotoPage> {
     await prefs.setString(key, jsonEncode(record));
 
     if (!context.mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('保存しました')),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(const SnackBar(content: Text('保存しました')));
   }
 
   Future<void> _loadData() async {
@@ -116,7 +117,8 @@ class _PhotoPageState extends State<PhotoPage> {
   }
 
   String _generateKey(String suffix) {
-    final dateString = '${_selectedDate.year}-${_selectedDate.month}-${_selectedDate.day}';
+    final dateString =
+        '${_selectedDate.year}-${_selectedDate.month}-${_selectedDate.day}';
     return 'jiro_${dateString}_${_selectedStore}_$suffix';
   }
 
@@ -131,9 +133,7 @@ class _PhotoPageState extends State<PhotoPage> {
   @override
   Widget build(BuildContext context) {
     if (_selectedStore == null) {
-      return const Scaffold(
-        body: Center(child: CircularProgressIndicator()),
-      );
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
     }
 
     return Scaffold(
@@ -164,10 +164,7 @@ class _PhotoPageState extends State<PhotoPage> {
                 });
               },
               items: _storeNames.map((name) {
-                return DropdownMenuItem(
-                  value: name,
-                  child: Text(name),
-                );
+                return DropdownMenuItem(value: name, child: Text(name));
               }).toList(),
             ),
             const SizedBox(height: 16),
@@ -177,7 +174,10 @@ class _PhotoPageState extends State<PhotoPage> {
             InkWell(
               onTap: _pickDate,
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 14,
+                ),
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.grey),
                   borderRadius: BorderRadius.circular(4),
@@ -226,18 +226,28 @@ class _PhotoPageState extends State<PhotoPage> {
                       });
                     }
                   },
-                  child: Image.file(
-                    File(xfile.path),
-                    width: 100,
-                    height: 100,
-                    fit: BoxFit.cover,
-                  ),
+                  child: kIsWeb
+                      ? Image.network(
+                          xfile.path,
+                          width: 100,
+                          height: 100,
+                          fit: BoxFit.cover,
+                        )
+                      : Image.file(
+                          File(xfile.path),
+                          width: 100,
+                          height: 100,
+                          fit: BoxFit.cover,
+                        ),
                 );
               }).toList(),
             ),
             const SizedBox(height: 24),
 
-            const Text('🍜 食べたメニュー', style: TextStyle(fontWeight: FontWeight.bold)),
+            const Text(
+              '🍜 食べたメニュー',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
             const SizedBox(height: 6),
             TextField(
               controller: _menuController,
