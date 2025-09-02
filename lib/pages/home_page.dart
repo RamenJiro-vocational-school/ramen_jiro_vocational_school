@@ -95,7 +95,7 @@ class _HomePageState extends State<HomePage> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('⚠️ ご注意ください ⚠️'),
+        title: const Text('⚠️ ご注意ください ⚠️', textAlign: TextAlign.center),
         content: const Text(
           '本アプリの営業時間情報はあくまで目安です\n\n'
           '・麺切れ等で早仕舞いになる場合があります\n'
