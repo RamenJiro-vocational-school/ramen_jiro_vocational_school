@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'ラーメン二郎アプリ',
       theme: ThemeData(
-        fontFamily: 'MPlusRounded1c',
+        fontFamily: 'MPlusRounded1c-Medium',
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFFFFF000)),
         useMaterial3: true,
         bottomNavigationBarTheme: const BottomNavigationBarThemeData(
