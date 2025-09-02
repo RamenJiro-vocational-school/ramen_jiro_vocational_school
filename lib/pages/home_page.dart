@@ -25,6 +25,18 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     _allStoresFuture = _loadAllStores();
     _reloadFavorites();
+
+    @override
+    void initState() {
+      super.initState();
+      _allStoresFuture = _loadAllStores();
+      _reloadFavorites();
+
+      // ポップアップ表示
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _showNoticeDialog();
+      });
+    }
   }
 
   Future<void> _reloadFavorites() async {
@@ -84,6 +96,29 @@ class _HomePageState extends State<HomePage> {
       default:
         return Colors.grey;
     }
+  }
+
+  void _showNoticeDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('⚠️ ご注意ください ⚠️'),
+        content: const Text(
+          '本アプリの営業時間情報はあくまで目安です。\n\n'
+          '・麺切れ等で早仕舞いになる場合があります\n'
+          '・臨時の営業/休業もあり得ます\n'
+          '・祝日は不定休な店舗も多いです\n'
+          '・年末年始や大型連休は特にご注意を\n\n'
+          '必ず店舗のSNSや公式情報をご確認のうえご訪問ください。',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
   }
 
   Future<void> _pickDateTime() async {
