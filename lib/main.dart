@@ -6,7 +6,6 @@ import 'pages/stamp_rally_page.dart';
 import 'pages/photo_page.dart';
 import 'pages/record_list_page.dart';
 
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // いまの FavoritesService は全て static なので初期化は不要
@@ -22,6 +21,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFFFFF000)),
         useMaterial3: true,
+        fontFamily: 'NotoSerifJP',
         bottomNavigationBarTheme: const BottomNavigationBarThemeData(
           selectedItemColor: Colors.black,
           unselectedItemColor: Colors.black54, // これで薄すぎない色に
@@ -49,7 +49,7 @@ class _RootTabsState extends State<RootTabs> {
     StoreListPage(), // 県別一覧＋検索
     StampRallyPage(), //スタンプラリー画面
     PhotoPage(), // ラーメン記録ページ
-    RecordListPage(),// 過去の記録閲覧ページ
+    RecordListPage(), // 過去の記録閲覧ページ
   ];
 
   @override
