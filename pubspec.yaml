@@ -67,7 +67,7 @@ flutter:
   fonts:
     - family: MPlusRounded1c
       fonts:
-        - asset: fonts/MPLUSRounded1c-Medium.ttf
+        - asset: assets/fonts/MPLUSRounded1c-Medium.ttf
           weight: 500
 
   # To add assets to your application, add an assets section, like this:
