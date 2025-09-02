@@ -232,105 +232,102 @@ class _RecordListPageState extends State<RecordListPage> {
                             builder: (_) => StatefulBuilder(
                               builder: (context, setState) => AlertDialog(
                                 title: Text(store),
-                                content: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    if (photoList.isNotEmpty)
-                                      Column(
-                                        children: [
-                                          // ここで SizedBox でサイズをしっかり固定！
-                                          SizedBox(
-                                            height: 200,
-                                            width: double.infinity,
-                                            child: PageView.builder(
-                                              controller: pageController,
-                                              itemCount: photoList.length,
-                                              onPageChanged: (index) {
-                                                setState(
-                                                  () => currentPage = index,
-                                                );
-                                              },
-                                              itemBuilder: (context, index) {
-                                                final path = photoList[index];
-                                                if (kIsWeb) {
-                                                  return Image.network(
-                                                    path,
-                                                    fit: BoxFit.cover,
-                                                    errorBuilder: (_, __, ___) =>
-                                                        const SizedBox.shrink(),
-                                                  );
-                                                } else if (File(
+                                content: SizedBox(
+                                  width: double.maxFinite,
+                                  height: 400, // ← ✨ 高さを固定
+                                  child: Column(
+                                    children: [
+                                      // 📷 カルーセル
+                                      if (photoList.isNotEmpty) ...[
+                                        SizedBox(
+                                          height: 200,
+                                          child: PageView.builder(
+                                            controller: pageController,
+                                            itemCount: photoList.length,
+                                            onPageChanged: (index) => setState(
+                                              () => currentPage = index,
+                                            ),
+                                            itemBuilder: (context, index) {
+                                              final path = photoList[index];
+                                              if (kIsWeb) {
+                                                return Image.network(
                                                   path,
-                                                ).existsSync()) {
-                                                  return Image.file(
-                                                    File(path),
-                                                    fit: BoxFit.cover,
-                                                  );
-                                                } else {
-                                                  return const SizedBox.shrink();
-                                                }
-                                              },
+                                                  fit: BoxFit.cover,
+                                                  errorBuilder: (_, __, ___) =>
+                                                      const SizedBox.shrink(),
+                                                );
+                                              } else if (File(
+                                                path,
+                                              ).existsSync()) {
+                                                return Image.file(
+                                                  File(path),
+                                                  fit: BoxFit.cover,
+                                                );
+                                              } else {
+                                                return const SizedBox.shrink();
+                                              }
+                                            },
+                                          ),
+                                        ),
+                                        const SizedBox(height: 8),
+                                        // 🔘 ドットインジケーター
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: List.generate(
+                                            photoList.length,
+                                            (index) => Container(
+                                              margin:
+                                                  const EdgeInsets.symmetric(
+                                                    horizontal: 4,
+                                                  ),
+                                              width: index == currentPage
+                                                  ? 10
+                                                  : 6,
+                                              height: index == currentPage
+                                                  ? 10
+                                                  : 6,
+                                              decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                color: index == currentPage
+                                                    ? Colors.black
+                                                    : Colors.grey,
+                                              ),
                                             ),
                                           ),
-                                          const SizedBox(height: 8),
-                                          // 🔘 ドットインジケーター
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: List.generate(
-                                              photoList.length,
-                                              (index) {
-                                                final isActive =
-                                                    index == currentPage;
-                                                return Container(
-                                                  margin:
-                                                      const EdgeInsets.symmetric(
-                                                        horizontal: 4,
-                                                      ),
-                                                  width: isActive ? 10 : 6,
-                                                  height: isActive ? 10 : 6,
-                                                  decoration: BoxDecoration(
-                                                    shape: BoxShape.circle,
-                                                    color: isActive
-                                                        ? Colors.black
-                                                        : Colors.grey,
-                                                  ),
-                                                );
-                                              },
+                                        ),
+                                      ],
+                                      const SizedBox(height: 12),
+                                      Row(
+                                        children: [
+                                          const Text('📅 '),
+                                          Text('日付: $date'),
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          const Text('🍜 '),
+                                          Text('メニュー: $menu'),
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          const Text('🔊 '),
+                                          Text('コール: ${data['call'] ?? ''}'),
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          const Text('📝 '),
+                                          Flexible(
+                                            child: Text(
+                                              'メモ: ${data['memo'] ?? ''}',
                                             ),
                                           ),
                                         ],
                                       ),
-                                    const SizedBox(height: 12),
-                                    Row(
-                                      children: [
-                                        const Text('📅 '),
-                                        Text('日付: $date'),
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        const Text('🍜 '),
-                                        Text('メニュー: $menu'),
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        const Text('🔊 '),
-                                        Text('コール: ${data['call'] ?? ''}'),
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        const Text('📝 '),
-                                        Flexible(
-                                          child: Text(
-                                            'メモ: ${data['memo'] ?? ''}',
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                                 actions: [
                                   TextButton(
