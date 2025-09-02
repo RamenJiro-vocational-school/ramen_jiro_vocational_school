@@ -19,9 +19,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'ラーメン二郎アプリ',
       theme: ThemeData(
+        fontFamily: 'NotoSerifJP',
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFFFFF000)),
         useMaterial3: true,
-        fontFamily: 'NotoSerifJP',
         bottomNavigationBarTheme: const BottomNavigationBarThemeData(
           selectedItemColor: Colors.black,
           unselectedItemColor: Colors.black54, // これで薄すぎない色に
