@@ -26,17 +26,10 @@ class _HomePageState extends State<HomePage> {
     _allStoresFuture = _loadAllStores();
     _reloadFavorites();
 
-    @override
-    void initState() {
-      super.initState();
-      _allStoresFuture = _loadAllStores();
-      _reloadFavorites();
-
-      // ポップアップ表示
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        _showNoticeDialog();
-      });
-    }
+    //ポップアップ表示
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _showNoticeDialog();
+    });
   }
 
   Future<void> _reloadFavorites() async {
