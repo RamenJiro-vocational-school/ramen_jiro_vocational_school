@@ -1,5 +1,0 @@
-flutter:
-  fonts:
-    - family: NotoSerifJP
-      fonts:
-        - asset: assets/fonts/NotoSerifJP-Regular.otf
