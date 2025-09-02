@@ -234,10 +234,10 @@ class _RecordListPageState extends State<RecordListPage> {
                                 title: Text(store),
                                 content: SizedBox(
                                   width: double.maxFinite,
-                                  height: 400, // ← ✨ 高さを固定
+                                  height: 400, //高さを固定
                                   child: Column(
                                     children: [
-                                      // 📷 カルーセル
+                                      //カルーセル
                                       if (photoList.isNotEmpty) ...[
                                         SizedBox(
                                           height: 200,
@@ -270,7 +270,7 @@ class _RecordListPageState extends State<RecordListPage> {
                                           ),
                                         ),
                                         const SizedBox(height: 8),
-                                        // 🔘 ドットインジケーター
+                                        //ドットインジケーター
                                         Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
