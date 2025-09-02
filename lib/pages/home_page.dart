@@ -97,12 +97,12 @@ class _HomePageState extends State<HomePage> {
       builder: (context) => AlertDialog(
         title: const Text('⚠️ ご注意ください ⚠️'),
         content: const Text(
-          '本アプリの営業時間情報はあくまで目安です。\n\n'
+          '本アプリの営業時間情報はあくまで目安です\n\n'
           '・麺切れ等で早仕舞いになる場合があります\n'
           '・臨時の営業/休業もあり得ます\n'
           '・祝日は不定休な店舗も多いです\n'
           '・年末年始や大型連休は特にご注意を\n\n'
-          '必ず店舗のSNSや公式情報をご確認のうえご訪問ください。',
+          '必ず店舗のSNSや公式情報をご確認のうえご訪問ください',
         ),
         actions: [
           TextButton(
