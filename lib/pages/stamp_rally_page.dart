@@ -187,13 +187,13 @@ class _StampRallyPageState extends State<StampRallyPage> {
                                 right: 4,
                                 top: 4,
                                 child: CircleAvatar(
-                                  radius: 8,
+                                  radius: 10,
                                   backgroundColor: Colors.red,
                                   child: Text(
                                     '$count',
                                     style: const TextStyle(
                                       color: Colors.white,
-                                      fontSize: 8,
+                                      fontSize: 10,
                                     ),
                                   ),
                                 ),
