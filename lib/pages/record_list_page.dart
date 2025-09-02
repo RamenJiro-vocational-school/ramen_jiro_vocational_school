@@ -224,67 +224,123 @@ class _RecordListPageState extends State<RecordListPage> {
                           },
                         ),
                         onTap: () {
+                          int currentPage = 0;
+                          final pageController = PageController();
+
                           showDialog(
                             context: context,
-                            builder: (_) => AlertDialog(
-                              title: Text(store),
-                              content: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  if (photoPath != null &&
-                                      (!kIsWeb && File(photoPath).existsSync()))
-                                    Image.file(
-                                      File(photoPath),
-                                      width: 200,
-                                      height: 200,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  if (photoPath != null && kIsWeb)
-                                    Image.network(
-                                      photoPath,
-                                      width: 200,
-                                      height: 200,
-                                      fit: BoxFit.cover,
-                                      errorBuilder: (_, __, ___) =>
-                                          const SizedBox(),
-                                    ),
-                                  const SizedBox(height: 12),
-                                  Row(
+                            builder: (_) => StatefulBuilder(
+                              builder: (context, setState) => AlertDialog(
+                                title: Text(store),
+                                content: SingleChildScrollView(
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
                                     children: [
-                                      const Text('📅 '),
-                                      Text('日付: $date'),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      const Text('🍜 '),
-                                      Text('メニュー: $menu'),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      const Text('🔊 '),
-                                      Text('コール: ${data['call'] ?? ''}'),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      const Text('📝 '),
-                                      Flexible(
-                                        child: Text(
-                                          'メモ: ${data['memo'] ?? ''}',
+                                      // 🖼 カルーセル表示
+                                      if (photoList.isNotEmpty)
+                                        Column(
+                                          children: [
+                                            SizedBox(
+                                              height: 200,
+                                              width: double.infinity,
+                                              child: PageView.builder(
+                                                controller: pageController,
+                                                itemCount: photoList.length,
+                                                onPageChanged: (index) {
+                                                  setState(
+                                                    () => currentPage = index,
+                                                  );
+                                                },
+                                                itemBuilder: (context, index) {
+                                                  final path = photoList[index];
+                                                  if (kIsWeb) {
+                                                    return Image.network(
+                                                      path,
+                                                      fit: BoxFit.cover,
+                                                      errorBuilder: (_, __, ___) =>
+                                                          const SizedBox.shrink(),
+                                                    );
+                                                  } else if (File(
+                                                    path,
+                                                  ).existsSync()) {
+                                                    return Image.file(
+                                                      File(path),
+                                                      fit: BoxFit.cover,
+                                                    );
+                                                  } else {
+                                                    return const SizedBox.shrink();
+                                                  }
+                                                },
+                                              ),
+                                            ),
+                                            const SizedBox(height: 8),
+                                            // 🔘 ドットインジケーター
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: List.generate(
+                                                photoList.length,
+                                                (index) {
+                                                  final isActive =
+                                                      index == currentPage;
+                                                  return Container(
+                                                    margin:
+                                                        const EdgeInsets.symmetric(
+                                                          horizontal: 4,
+                                                        ),
+                                                    width: isActive ? 10 : 6,
+                                                    height: isActive ? 10 : 6,
+                                                    decoration: BoxDecoration(
+                                                      shape: BoxShape.circle,
+                                                      color: isActive
+                                                          ? Colors.black
+                                                          : Colors.grey,
+                                                    ),
+                                                  );
+                                                },
+                                              ),
+                                            ),
+                                          ],
                                         ),
+                                      const SizedBox(height: 12),
+                                      Row(
+                                        children: [
+                                          const Text('📅 '),
+                                          Text('日付: $date'),
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          const Text('🍜 '),
+                                          Text('メニュー: $menu'),
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          const Text('🔊 '),
+                                          Text('コール: ${data['call'] ?? ''}'),
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          const Text('📝 '),
+                                          Flexible(
+                                            child: Text(
+                                              'メモ: ${data['memo'] ?? ''}',
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ],
                                   ),
+                                ),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () => Navigator.pop(context),
+                                    child: const Text('閉じる'),
+                                  ),
                                 ],
                               ),
-                              actions: [
-                                TextButton(
-                                  onPressed: () => Navigator.pop(context),
-                                  child: const Text('閉じる'),
-                                ),
-                              ],
                             ),
                           );
                         },
