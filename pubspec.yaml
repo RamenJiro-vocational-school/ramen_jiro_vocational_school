@@ -65,7 +65,7 @@ flutter:
   assets:
     - assets/json/jiro_stores.json
 
-    fonts:
+  fonts:
     - family: NotoSerifJP
       fonts:
         - asset: assets/fonts/NotoSerifJP-Regular.otf
