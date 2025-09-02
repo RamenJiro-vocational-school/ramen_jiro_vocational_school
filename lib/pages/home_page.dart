@@ -1,3 +1,4 @@
+// ✅ 修正済み home_page.dart
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
@@ -16,8 +17,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   late Future<List<JiroStore>> _allStoresFuture;
 
-  // ★店名セット
   Set<String> _favorites = {};
+  DateTime? _customDateTime; // ← 任意時刻用
 
   @override
   void initState() {
@@ -41,15 +42,16 @@ class _HomePageState extends State<HomePage> {
     return list;
   }
 
-  String _nowHHmm() {
-    final now = DateTime.now();
-    return '${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}';
+  String _formatHHmm(DateTime dt) {
+    return '${dt.hour.toString().padLeft(2, '0')}:${dt.minute.toString().padLeft(2, '0')}';
   }
 
-  /// 状態を返す（営業中=open／休憩中=break／定休日=closed）
+  DateTime _currentDateTime() => _customDateTime ?? DateTime.now();
+
   Map<String, String> _statusOf(JiroStore store) {
-    final int today = DateTime.now().weekday; // 1..7（月..日）
-    final String now = _nowHHmm();
+    final now = _currentDateTime();
+    final int today = now.weekday;
+    final String nowHHmm = _formatHHmm(now);
 
     if (!store.openDays.contains(today)) {
       return {"status": "closed", "hours": ""};
@@ -65,7 +67,7 @@ class _HomePageState extends State<HomePage> {
       final parts = slot.split('-');
       if (parts.length != 2) continue;
       final start = parts[0], end = parts[1];
-      if (now.compareTo(start) >= 0 && now.compareTo(end) <= 0) {
+      if (nowHHmm.compareTo(start) >= 0 && nowHHmm.compareTo(end) <= 0) {
         isOpen = true;
         break;
       }
@@ -76,12 +78,38 @@ class _HomePageState extends State<HomePage> {
   Color _tileColor(String status) {
     switch (status) {
       case "open":
-        return const Color(0xFFFFF000); // 明るい黄
+        return const Color(0xFFFFF000);
       case "break":
-        return const Color(0xFFDDD000); // 暗めの黄
+        return const Color(0xFFDDD000);
       default:
-        return Colors.grey; // 定休
+        return Colors.grey;
     }
+  }
+
+  Future<void> _pickDateTime() async {
+    final pickedDate = await showDatePicker(
+      context: context,
+      initialDate: _currentDateTime(),
+      firstDate: DateTime(2020),
+      lastDate: DateTime(2030),
+    );
+    if (pickedDate == null) return;
+
+    final pickedTime = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.fromDateTime(_currentDateTime()),
+    );
+    if (pickedTime == null) return;
+
+    setState(() {
+      _customDateTime = DateTime(
+        pickedDate.year,
+        pickedDate.month,
+        pickedDate.day,
+        pickedTime.hour,
+        pickedTime.minute,
+      );
+    });
   }
 
   Future<void> _openDetail(JiroStore store) async {
@@ -89,7 +117,6 @@ class _HomePageState extends State<HomePage> {
       context,
       MaterialPageRoute(builder: (_) => StoreDetailPage(store: store)),
     );
-    // 戻ってきたら★を取り直す
     await _reloadFavorites();
   }
 
@@ -97,12 +124,27 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFFFF8D9),
-      appBar: AppBar(title: const Text('ラーメン二郎データベース')),
+      appBar: AppBar(
+        title: const Text('ラーメン二郎データベース'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.access_time),
+            tooltip: '時刻を指定',
+            onPressed: _pickDateTime,
+          ),
+          if (_customDateTime != null)
+            IconButton(
+              icon: const Icon(Icons.refresh),
+              tooltip: '現在時刻に戻す',
+              onPressed: () => setState(() => _customDateTime = null),
+            ),
+        ],
+      ),
       body: FutureBuilder<List<JiroStore>>(
         future: _allStoresFuture,
         builder: (context, snap) {
           if (snap.hasError) {
-            return Center(child: Text('エラー発生: ${snap.error}'));
+            return Center(child: Text('エラー発生: \${snap.error}'));
           }
           if (!snap.hasData) {
             return const Center(child: CircularProgressIndicator());
