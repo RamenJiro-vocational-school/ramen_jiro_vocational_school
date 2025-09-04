@@ -1,16 +1,82 @@
-# jiro_navi
+# 🍜 ラーメン二郎データベースアプリ
 
-A new Flutter project.
+Flutter で開発した個人アプリです。全国のラーメン二郎店舗の営業時間を検索し、食べた記録を写真付きで保存・閲覧できるアプリです。実用性と遊び心を両立した、自作ポートフォリオ作品です！
 
-## Getting Started
+---
 
-This project is a starting point for a Flutter application.
+## 📱 主な機能
 
-A few resources to get you started if this is your first Flutter project:
+| 機能             | 説明 |
+|------------------|------|
+| 営業時間の判定   | 現在時刻や任意時刻に応じて、店舗が営業中かどうかを判定し色分け表示（黄色：営業中、灰色：定休日など）|
+| 店舗の詳細表示   | 営業時間、営業曜日、地図リンク、画像などを個別ページで閲覧可能 |
+| 記録保存         | 食べたラーメンの記録を、店舗名・メニュー・日付・コール・メモ・写真（最大4枚）付きで保存可能 |
+| 記録の一覧表示   | 年や店舗名でフィルター可能な絞り込みリスト表示。写真はカルーセルでスワイプ閲覧可能 |
+| お気に入り店舗   | 気になる店舗をお気に入り登録し、目立つアイコンで一覧表示 |
+| 警告文ポップアップ | 営業時間の信頼性に関する注意喚起を、アプリ起動時に毎回表示 |
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+---
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 🛠️ 使用技術
+
+- **Flutter 3.32.8**
+- **Dart**
+- **shared_preferences**：ローカルストレージに記録保存
+- **image_picker**：写真の選択・保存
+- **flutter_map + latlong2**：地図表示（店舗の位置情報）
+- **カスタムフォント**：M PLUS Rounded 1c フォント適用
+
+---
+
+## 🎨 UIのこだわり
+
+- フラットで可愛らしい二郎っぽい配色（黄色・黒・赤）
+- カルーセル表示による複数写真の確認
+- `PageView` や `DropdownButton` によるモダンな操作感
+- 各画面で適切なフォント・マージン・カラーを調整済み
+
+---
+
+## 📂 画面構成
+
+```bash
+lib/
+├── main.dart
+├── pages/
+│   ├── home_page.dart       # トップページ（店舗リスト・営業判定）
+│   ├── store_detail.dart    # 店舗詳細ページ
+│   └── record_list_page.dart# 食べた記録の一覧
+├── models/
+│   └── jiro_store.dart      # 店舗データモデル
+├── utils/
+│   └── favorites_service.dart # お気に入り保存のユーティリティ
+└── assets/
+    └── json/jiro_stores.json  # 店舗データ
+```
+
+---
+
+## 🧪 起動方法
+
+```bash
+flutter pub get
+flutter run -d chrome  # または -d emulator-5554 等（デバイスID）
+```
+
+---
+
+## 📦 今後の拡張案
+
+- Firebase を使ったクラウド保存（複数端末同期）
+- 店舗レビュー機能
+- SNSシェア機能
+- 英語対応
+
+---
+
+## 🙋‍♂️ 作者コメント
+
+転職活動用ポートフォリオとして、実用性・コード設計・UIへのこだわりを盛り込んで開発しました。
+二郎好きのエンジニアが、「本当にあったら便利だな」と思えるアプリを形にしています。ぜひ触ってみてください！
+
+> 🍜 推し二郎は「小岩」と「前橋」です！
