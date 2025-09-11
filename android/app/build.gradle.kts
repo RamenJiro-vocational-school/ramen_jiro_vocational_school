@@ -1,12 +1,14 @@
 plugins {
     id("com.android.application")
     id("kotlin-android")
-    // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
-    id("dev.flutter.flutter-gradle-plugin")
+    id("dev.flutter.flutter-gradle-plugin") // FlutterのGradleプラグイン
 }
 
+import java.util.Properties
+import java.io.FileInputStream
+
 android {
-    namespace = "com.jirorian.ramenjiroapp"　//アプリ用のドメイン名に変更
+    namespace = "com.jirorian.ramenjiroapp"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -19,22 +21,39 @@ android {
         jvmTarget = JavaVersion.VERSION_11.toString()
     }
 
+    // 　以下署名設定
+    signingConfigs {
+        create("release") {
+            val keystoreProperties = Properties().apply {
+                val keystorePropertiesFile = rootProject.file("key.properties")
+                if (keystorePropertiesFile.exists()) {
+                    load(FileInputStream(keystorePropertiesFile))
+                }
+            }
+
+            storeFile = file(keystoreProperties["storeFile"] as String)
+            storePassword = keystoreProperties["storePassword"] as String
+            keyAlias = keystoreProperties["keyAlias"] as String
+            keyPassword = keystoreProperties["keyPassword"] as String
+        }
+    }
+
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "com.jirorian.ramenjiroapp"
-        // You can update the following values to match your application needs.
-        // For more information, see: https://flutter.dev/to/review-gradle-config.
-        minSdk = flutter.minSdkVersion
-        targetSdk = flutter.targetSdkVersion
-        versionCode = flutter.versionCode
-        versionName = flutter.versionName
+    applicationId = "com.jirorian.ramenjiroapp"
+    minSdk = flutter.minSdkVersion
+    targetSdk = flutter.targetSdkVersion
+    versionCode = flutter.versionCode
+    versionName = flutter.versionName
     }
 
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig = signingConfigs.getByName("debug")
+            signingConfig = signingConfigs.getByName("release") // ← debug → release に変更！
+            isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
 }
