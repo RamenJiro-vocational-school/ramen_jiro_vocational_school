@@ -1,7 +1,7 @@
 plugins {
     id("com.android.application")
     id("kotlin-android")
-    id("dev.flutter.flutter-gradle-plugin") // FlutterのGradleプラグイン
+    id("dev.flutter.flutter-gradle-plugin")
 }
 
 import java.util.Properties
@@ -21,17 +21,19 @@ android {
         jvmTarget = JavaVersion.VERSION_11.toString()
     }
 
-    // 　以下署名設定
+    // 署名設定
     signingConfigs {
         create("release") {
             val keystoreProperties = Properties().apply {
-                val keystorePropertiesFile = rootProject.file("key.properties")
-                if (keystorePropertiesFile.exists()) {
-                    load(FileInputStream(keystorePropertiesFile))
+                val keystoreFile = rootProject.file("key.properties")
+                if (keystoreFile.exists()) {
+                    load(FileInputStream(keystoreFile))
+                } else {
+                    throw GradleException("key.properties file is missing!")
                 }
             }
 
-            storeFile = file(keystoreProperties["storeFile"] as String)
+            storeFile = file(keystoreProperties["storeFile"]!!)
             storePassword = keystoreProperties["storePassword"] as String
             keyAlias = keystoreProperties["keyAlias"] as String
             keyPassword = keystoreProperties["keyPassword"] as String
@@ -39,17 +41,18 @@ android {
     }
 
     defaultConfig {
-    applicationId = "com.jirorian.ramenjiroapp"
-    minSdk = flutter.minSdkVersion
-    targetSdk = flutter.targetSdkVersion
-    versionCode = flutter.versionCode
-    versionName = flutter.versionName
+        applicationId = "com.jirorian.ramenjiroapp"
+        minSdk = flutter.minSdkVersion
+        targetSdk = flutter.targetSdkVersion
+        versionCode = flutter.versionCode
+        versionName = flutter.versionName
     }
 
     buildTypes {
         release {
-            signingConfig = signingConfigs.getByName("release") // ← debug → release に変更！
+            signingConfig = signingConfigs.getByName("release")
             isMinifyEnabled = false
+            isShrinkResources = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
